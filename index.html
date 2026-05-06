@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1A2A4A" />
+<title>Πτώσεις · Греческие падежи</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  html, body {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background-color: #F7F2E8;
+    background-image:
+      radial-gradient(at 20% 10%, rgba(181, 97, 59, 0.04) 0%, transparent 50%),
+      radial-gradient(at 80% 90%, rgba(26, 42, 74, 0.04) 0%, transparent 50%);
+    min-height: 100vh;
+    color: #1A2A4A;
+  }
+  .font-display { font-family: 'Fraunces', Georgia, serif; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
+  @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .animate-slide-up { animation: slideUp 0.4s ease-out; }
+  .animate-pop { animation: pop 0.4s ease-out; }
+  .animate-shake { animation: shake 0.4s ease-out; }
+  .animate-fade { animation: fadeIn 0.3s ease-out; }
+  .tabular { font-variant-numeric: tabular-nums; }
+  button { -webkit-user-select: none; user-select: none; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect } = React;
+
+// =====================================================================
+// Telegram WebApp setup
+// =====================================================================
+const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+if (tg) {
+  try { tg.ready(); } catch(e) {}
+  try { tg.expand(); } catch(e) {}
+  try { tg.setHeaderColor('#1A2A4A'); } catch(e) {}
+  try { tg.setBackgroundColor('#F7F2E8'); } catch(e) {}
+  try { tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch(e) {}
+}
+
+// =====================================================================
+// Storage — Telegram CloudStorage with localStorage fallback
+// =====================================================================
+const STORAGE_KEY = 'greek-cases-stats-v2';
+
+const cloudGet = (key) => new Promise((resolve) => {
+  let lsVal = null;
+  try { lsVal = localStorage.getItem(key); } catch(e) {}
+  if (tg && tg.CloudStorage && tg.CloudStorage.getItem) {
+    try {
+      tg.CloudStorage.getItem(key, (err, val) => {
+        if (err || !val) resolve(lsVal);
+        else resolve(val);
+      });
+    } catch(e) { resolve(lsVal); }
+  } else {
+    resolve(lsVal);
+  }
+});
+
+const cloudSet = (key, value) => new Promise((resolve) => {
+  try { localStorage.setItem(key, value); } catch(e) {}
+  if (tg && tg.CloudStorage && tg.CloudStorage.setItem) {
+    try { tg.CloudStorage.setItem(key, value, () => resolve()); }
+    catch(e) { resolve(); }
+  } else { resolve(); }
+});
+
+const cloudDel = (key) => new Promise((resolve) => {
+  try { localStorage.removeItem(key); } catch(e) {}
+  if (tg && tg.CloudStorage && tg.CloudStorage.removeItem) {
+    try { tg.CloudStorage.removeItem(key, () => resolve()); }
+    catch(e) { resolve(); }
+  } else { resolve(); }
+});
+
+const haptic = {
+  success: () => { try { tg && tg.HapticFeedback.notificationOccurred('success'); } catch(e) {} },
+  error:   () => { try { tg && tg.HapticFeedback.notificationOccurred('error'); } catch(e) {} },
+  light:   () => { try { tg && tg.HapticFeedback.impactOccurred('light'); } catch(e) {} },
+  medium:  () => { try { tg && tg.HapticFeedback.impactOccurred('medium'); } catch(e) {} },
+};
+
+// =====================================================================
+// Icons (lucide SVG paths)
+// =====================================================================
+const Icon = ({ size = 16, children, fill = 'none', strokeWidth = 2, style, className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24"
+       fill={fill} stroke="currentColor" strokeWidth={strokeWidth}
+       strokeLinecap="round" strokeLinejoin="round"
+       style={style} className={className}>
+    {children}
+  </svg>
+);
+
+const Flame = (p) => <Icon {...p}><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></Icon>;
+const CheckIcon = (p) => <Icon {...p}><polyline points="20 6 9 17 4 12"/></Icon>;
+const XIcon = (p) => <Icon {...p}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></Icon>;
+const ChevronRight = (p) => <Icon {...p}><polyline points="9 18 15 12 9 6"/></Icon>;
+const RotateCcw = (p) => <Icon {...p}><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></Icon>;
+const BookOpen = (p) => <Icon {...p}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></Icon>;
+const TypeIcon = (p) => <Icon {...p}><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></Icon>;
+const Award = (p) => <Icon {...p}><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></Icon>;
+
+// =====================================================================
+// Article exercises (53)
+// =====================================================================
+const ARTICLE_OPTIONS = ["ο", "η", "το", "του", "της", "τον", "τη", "την"];
+
+const ARTICLE_EXERCISES = [
+  // Genitive
+  { sentence: "Το βιβλίο __ δασκάλου.", translation: "Книга учителя.", correct: "του", caseType: "genitive", hint: "«Книга КОГО?» — учителя. Родительный, м.р. → του." },
+  { sentence: "Η αδερφή __ φίλου μου.", translation: "Сестра моего друга.", correct: "του", caseType: "genitive", hint: "«Сестра КОГО?» — друга. Родительный, м.р. → του." },
+  { sentence: "Το όνομα __ πόλης.", translation: "Название города.", correct: "της", caseType: "genitive", hint: "«Имя ЧЕГО?» — города. Родительный, ж.р. → της." },
+  { sentence: "Ο ρυθμός __ μουσικής.", translation: "Ритм музыки.", correct: "της", caseType: "genitive", hint: "«Ритм ЧЕГО?» — музыки. Родительный, ж.р. → της." },
+  { sentence: "Το τέλος __ μήνα.", translation: "Конец месяца.", correct: "του", caseType: "genitive", hint: "«Конец ЧЕГО?» — месяца. Родительный, м.р. → του." },
+  { sentence: "Το χρώμα __ πιάνου.", translation: "Цвет пианино.", correct: "του", caseType: "genitive", hint: "«Цвет ЧЕГО?» — пианино. Родительный, ср.р. → του." },
+  { sentence: "Ο τίτλος __ μαθήματος.", translation: "Название урока.", correct: "του", caseType: "genitive", hint: "Родительный, ср.р. → του." },
+  { sentence: "Η ομορφιά __ φωτογραφίας.", translation: "Красота фотографии.", correct: "της", caseType: "genitive", hint: "Родительный, ж.р. → της." },
+  { sentence: "Το χρώμα __ θάλασσας.", translation: "Цвет моря.", correct: "της", caseType: "genitive", hint: "Родительный, ж.р. → της." },
+  { sentence: "Η μητέρα __ παιδιού.", translation: "Мать ребёнка.", correct: "του", caseType: "genitive", hint: "«Мать КОГО?» — ребёнка. Родительный, ср.р. → του." },
+  { sentence: "Το αυτοκίνητο __ αδερφού μου.", translation: "Машина моего брата.", correct: "του", caseType: "genitive", hint: "Родительный, м.р. → του." },
+  { sentence: "Η αρχή __ ταινίας.", translation: "Начало фильма.", correct: "της", caseType: "genitive", hint: "Родительный, ж.р. → της." },
+  { sentence: "Ο κήπος __ σπιτιού.", translation: "Сад дома.", correct: "του", caseType: "genitive", hint: "«Сад ЧЕГО?» — дома. Родительный, ср.р. → του." },
+  { sentence: "Η συμβουλή __ γιατρού.", translation: "Совет врача.", correct: "του", caseType: "genitive", hint: "«Совет КОГО?» — врача. Родительный, м.р. → του." },
+  { sentence: "Η γνώμη __ μητέρας μου.", translation: "Мнение моей матери.", correct: "της", caseType: "genitive", hint: "«Мнение КОГО?» — матери. Родительный, ж.р. → της." },
+  { sentence: "Το νόημα __ ζωής.", translation: "Смысл жизни.", correct: "της", caseType: "genitive", hint: "«Смысл ЧЕГО?» — жизни. Родительный, ж.р. → της." },
+  { sentence: "Το μέγεθος __ ουρανού.", translation: "Размер неба.", correct: "του", caseType: "genitive", hint: "Родительный, м.р. → του." },
+
+  // Accusative
+  { sentence: "Βλέπω __ δάσκαλο.", translation: "Вижу учителя.", correct: "τον", caseType: "accusative", hint: "«Вижу КОГО?» — учителя. Винительный, м.р. → τον." },
+  { sentence: "Αγαπώ __ μουσική.", translation: "Люблю музыку.", correct: "τη", caseType: "accusative", hint: "«Люблю ЧТО?» — музыку. Перед μ → τη." },
+  { sentence: "Διαβάζω __ βιβλίο.", translation: "Читаю книгу.", correct: "το", caseType: "accusative", hint: "«Читаю ЧТО?» — книгу. Винительный, ср.р. → το." },
+  { sentence: "Παίζω __ πιάνο.", translation: "Играю на пианино.", correct: "το", caseType: "accusative", hint: "Винительный, ср.р. → το." },
+  { sentence: "Ξέρω __ φίλο σου.", translation: "Знаю твоего друга.", correct: "τον", caseType: "accusative", hint: "Винительный, м.р. → τον." },
+  { sentence: "Παίρνω __ φωτογραφία.", translation: "Делаю фото.", correct: "τη", caseType: "accusative", hint: "Перед φ → τη." },
+  { sentence: "Περιμένω __ Μάιο.", translation: "Жду май.", correct: "τον", caseType: "accusative", hint: "Винительный, м.р. → τον." },
+  { sentence: "Ψάχνω __ μαθητή.", translation: "Ищу ученика.", correct: "τον", caseType: "accusative", hint: "Винительный, м.р. → τον." },
+  { sentence: "Ακούω __ μουσική.", translation: "Слушаю музыку.", correct: "τη", caseType: "accusative", hint: "Перед μ → τη." },
+  { sentence: "Γράφω __ μάθημα.", translation: "Пишу урок.", correct: "το", caseType: "accusative", hint: "Винительный, ср.р. → το." },
+  { sentence: "Καλώ __ αδερφό μου.", translation: "Звоню брату.", correct: "τον", caseType: "accusative", hint: "Винительный, м.р. → τον." },
+  { sentence: "Έχω __ βιβλίο.", translation: "У меня есть книга.", correct: "το", caseType: "accusative", hint: "После «έχω» — винительный. Ср.р. → το." },
+  { sentence: "Πίνω __ καφέ.", translation: "Пью кофе.", correct: "τον", caseType: "accusative", hint: "Винительный, м.р. → τον." },
+  { sentence: "Τρώω __ μήλο.", translation: "Ем яблоко.", correct: "το", caseType: "accusative", hint: "Винительный, ср.р. → το." },
+  { sentence: "Κοιτάζω __ ουρανό.", translation: "Смотрю на небо.", correct: "τον", caseType: "accusative", hint: "Винительный, м.р. → τον." },
+  { sentence: "Συναντώ __ αδερφή μου.", translation: "Встречаю сестру.", correct: "την", caseType: "accusative", hint: "Перед α (гласная) — την." },
+  { sentence: "Γνωρίζω __ γυναίκα.", translation: "Знаю женщину.", correct: "τη", caseType: "accusative", hint: "Перед γ — τη." },
+  { sentence: "Αγαπώ __ ζωή.", translation: "Люблю жизнь.", correct: "τη", caseType: "accusative", hint: "Перед ζ — τη." },
+  { sentence: "Επισκέπτομαι __ χώρα.", translation: "Посещаю страну.", correct: "τη", caseType: "accusative", hint: "Перед χ — τη." },
+
+  // Nominative
+  { sentence: "__ δάσκαλος διαβάζει.", translation: "Учитель читает.", correct: "ο", caseType: "nominative", hint: "Подлежащее. Именительный, м.р. → ο." },
+  { sentence: "__ φωτογραφία είναι ωραία.", translation: "Фотография красивая.", correct: "η", caseType: "nominative", hint: "Подлежащее. Именительный, ж.р. → η." },
+  { sentence: "__ μάθημα είναι δύσκολο.", translation: "Урок сложный.", correct: "το", caseType: "nominative", hint: "Подлежащее. Именительный, ср.р. → το." },
+  { sentence: "__ σπίτι είναι μεγάλο.", translation: "Дом большой.", correct: "το", caseType: "nominative", hint: "Именительный, ср.р. → το." },
+  { sentence: "__ μουσική παίζει.", translation: "Музыка играет.", correct: "η", caseType: "nominative", hint: "Именительный, ж.р. → η." },
+  { sentence: "__ φίλος μου ήρθε.", translation: "Мой друг пришёл.", correct: "ο", caseType: "nominative", hint: "Именительный, м.р. → ο." },
+  { sentence: "__ πόλη είναι μεγάλη.", translation: "Город большой.", correct: "η", caseType: "nominative", hint: "Именительный, ж.р. → η." },
+  { sentence: "__ μήνας τελειώνει.", translation: "Месяц заканчивается.", correct: "ο", caseType: "nominative", hint: "Именительный, м.р. → ο." },
+  { sentence: "__ θάλασσα είναι ήρεμη.", translation: "Море спокойное.", correct: "η", caseType: "nominative", hint: "Именительный, ж.р. → η." },
+  { sentence: "__ ρυθμός είναι γρήγορος.", translation: "Ритм быстрый.", correct: "ο", caseType: "nominative", hint: "Именительный, м.р. → ο." },
+  { sentence: "__ άντρας έρχεται.", translation: "Мужчина идёт.", correct: "ο", caseType: "nominative", hint: "Именительный, м.р. → ο." },
+  { sentence: "__ γυναίκα είναι όμορφη.", translation: "Женщина красивая.", correct: "η", caseType: "nominative", hint: "Именительный, ж.р. → η." },
+  { sentence: "__ παιδί κοιμάται.", translation: "Ребёнок спит.", correct: "το", caseType: "nominative", hint: "Именительный, ср.р. → το." },
+  { sentence: "__ ήλιος λάμπει.", translation: "Солнце светит.", correct: "ο", caseType: "nominative", hint: "Именительный, м.р. → ο. (ήλιος м.р., не путай с русским «оно»)" },
+  { sentence: "__ καφές είναι ζεστός.", translation: "Кофе горячий.", correct: "ο", caseType: "nominative", hint: "Именительный, м.р. → ο." },
+  { sentence: "__ γιαγιά μαγειρεύει.", translation: "Бабушка готовит.", correct: "η", caseType: "nominative", hint: "Именительный, ж.р. → η." },
+  { sentence: "__ πιάνο παίζει.", translation: "Пианино играет.", correct: "το", caseType: "nominative", hint: "Именительный, ср.р. → το." },
+];
+
+// =====================================================================
+// Ending exercises — dual blank (article + ending)
+// =====================================================================
+const M_OS  = ["ο|ος", "του|ου", "τον|ο", "οι|οι"];
+const M_OS_S = ["ο|ός", "του|ού", "τον|ό", "οι|οί"];
+const M_AS  = ["ο|ας", "του|α", "τον|α", "οι|ες"];
+const M_HS  = ["ο|ής", "του|ή", "τον|ή", "οι|ές"];
+const F_H_N = ["η|η",  "της|ης", "την|η", "οι|ες"];
+const F_H_T = ["η|η",  "της|ης", "τη|η",  "οι|ες"];
+const F_A_N = ["η|α",  "της|ας", "την|α", "οι|ες"];
+const F_A_T = ["η|α",  "της|ας", "τη|α",  "οι|ες"];
+const F_HD  = ["η|ή",  "της|ής", "τη|ή",  "οι|ές"];
+const N_O   = ["το|ο", "του|ου", "τα|α",  "των|ων"];
+const N_I   = ["το|ι", "του|ιού", "τα|ιά", "των|ιών"];
+const N_I_S = ["το|ί", "του|ιού", "τα|ιά", "των|ιών"];
+const N_MA  = ["το|μα", "του|ματος", "τα|ματα", "των|μάτων"];
+
+const ENDING_EXERCISES = [
+  // Masc -ος unstressed
+  { prefix: "", middle: " δάσκαλ", suffix: " διαβάζει.", translation: "Учитель читает.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "δάσκαλος (м.р., -ος). Подлежащее → именительный → ο + -ος." },
+  { prefix: "Το βιβλίο ", middle: " δασκάλ", suffix: ".", translation: "Книга учителя.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "«Книга КОГО?» Родительный → του + -ου. Ударение сдвинулось: δάσκαλος → δασκάλου." },
+  { prefix: "Βλέπω ", middle: " δάσκαλ", suffix: ".", translation: "Вижу учителя.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Винительный м.р. → τον + -ο (теряет 'ς')." },
+  { prefix: "", middle: " φίλ", suffix: " μου ήρθε.", translation: "Мой друг пришёл.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "φίλος, подлежащее → ο + -ος." },
+  { prefix: "Η αδερφή ", middle: " φίλ", suffix: " μου.", translation: "Сестра моего друга.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Родительный → του + -ου." },
+  { prefix: "Ξέρω ", middle: " φίλ", suffix: " σου.", translation: "Знаю твоего друга.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Винительный → τον + -ο." },
+  { prefix: "", middle: " άνθρωπ", suffix: " είναι μοναδικός.", translation: "Человек уникален.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "άνθρωπος → ο + -ος." },
+  { prefix: "Η ζωή ", middle: " ανθρώπ", suffix: " είναι σύντομη.", translation: "Жизнь человека коротка.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Родительный → του + -ου. Ударение сдвинулось." },
+  { prefix: "Συναντώ ", middle: " άνθρωπ", suffix: ".", translation: "Встречаю человека.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Винительный → τον + -ο." },
+  { prefix: "", middle: " κήπ", suffix: " είναι όμορφος.", translation: "Сад красивый.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "κήπος → ο + -ος." },
+  { prefix: "Στη μέση ", middle: " κήπ", suffix: ".", translation: "В середине сада.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Родительный → του + -ου." },
+  { prefix: "", middle: " δρόμ", suffix: " είναι μακρύς.", translation: "Дорога длинная.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "δρόμος → ο + -ος." },
+  { prefix: "Στο τέλος ", middle: " δρόμ", suffix: ".", translation: "В конце дороги.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Родительный → του + -ου." },
+  { prefix: "", middle: " κόσμ", suffix: " αλλάζει.", translation: "Мир меняется.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "κόσμος → ο + -ος." },
+
+  // Masc -ός stressed
+  { prefix: "", middle: " αδελφ", suffix: " μου εργάζεται.", translation: "Мой брат работает.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "αδελφός — ударение на конце. Им. → ο + -ός." },
+  { prefix: "Η φωνή ", middle: " αδελφ", suffix: " μου.", translation: "Голос моего брата.", correct: "του|ού", options: M_OS_S, caseType: "genitive", hint: "Родительный → του + -ού (ударение на ού)." },
+  { prefix: "Καλώ ", middle: " αδελφ", suffix: " μου.", translation: "Зову брата.", correct: "τον|ό", options: M_OS_S, caseType: "accusative", hint: "Винительный → τον + -ό." },
+  { prefix: "", middle: " ποταμ", suffix: " είναι μεγάλος.", translation: "Река большая.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "ποταμός — ударная -ός. Им. → ο + -ός." },
+  { prefix: "Στις όχθες ", middle: " ποταμ", suffix: ".", translation: "На берегу реки.", correct: "του|ού", options: M_OS_S, caseType: "genitive", hint: "Родительный → του + -ού." },
+  { prefix: "", middle: " γιατρ", suffix: " ήρθε.", translation: "Доктор пришёл.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "γιατρός → ο + -ός." },
+  { prefix: "Καλώ ", middle: " γιατρ", suffix: ".", translation: "Звоню доктору.", correct: "τον|ό", options: M_OS_S, caseType: "accusative", hint: "Винительный → τον + -ό." },
+  { prefix: "", middle: " ουραν", suffix: " είναι γαλάζιος.", translation: "Небо голубое.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "ουρανός → ο + -ός." },
+  { prefix: "Το χρώμα ", middle: " ουραν", suffix: ".", translation: "Цвет неба.", correct: "του|ού", options: M_OS_S, caseType: "genitive", hint: "Родительный → του + -ού." },
+  { prefix: "", middle: " ρυθμ", suffix: " είναι γρήγορος.", translation: "Ритм быстрый.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "ρυθμός → ο + -ός." },
+  { prefix: "Ακούω ", middle: " ρυθμ", suffix: ".", translation: "Слышу ритм.", correct: "τον|ό", options: M_OS_S, caseType: "accusative", hint: "Винительный → τον + -ό." },
+
+  // Masc -ας
+  { prefix: "", middle: " μήν", suffix: " τελειώνει.", translation: "Месяц заканчивается.", correct: "ο|ας", options: M_AS, caseType: "nominative", hint: "μήνας (-ας) → ο + -ας." },
+  { prefix: "Στο τέλος ", middle: " μήν", suffix: ".", translation: "В конце месяца.", correct: "του|α", options: M_AS, caseType: "genitive", hint: "Тип -ας родительный → του + -α (без 'ς')." },
+  { prefix: "Περιμένω ", middle: " μήν", suffix: " Μάιο.", translation: "Жду май.", correct: "τον|α", options: M_AS, caseType: "accusative", hint: "Тип -ας винительный → τον + -α." },
+  { prefix: "", middle: " πατέρ", suffix: " μου εργάζεται.", translation: "Мой отец работает.", correct: "ο|ας", options: M_AS, caseType: "nominative", hint: "πατέρας → ο + -ας." },
+  { prefix: "Το όνομα ", middle: " πατέρ", suffix: ".", translation: "Имя отца.", correct: "του|α", options: M_AS, caseType: "genitive", hint: "Родительный -ας → του + -α." },
+  { prefix: "", middle: " άντρ", suffix: " μιλάει.", translation: "Мужчина говорит.", correct: "ο|ας", options: M_AS, caseType: "nominative", hint: "άντρας → ο + -ας." },
+  { prefix: "Συναντώ ", middle: " άντρ", suffix: ".", translation: "Встречаю мужчину.", correct: "τον|α", options: M_AS, caseType: "accusative", hint: "Винительный -ας → τον + -α." },
+  { prefix: "", middle: " χειμών", suffix: " είναι κρύος.", translation: "Зима холодная.", correct: "ο|ας", options: M_AS, caseType: "nominative", hint: "χειμώνας → ο + -ας." },
+
+  // Masc -ης
+  { prefix: "", middle: " μαθητ", suffix: " διαβάζει.", translation: "Ученик читает.", correct: "ο|ής", options: M_HS, caseType: "nominative", hint: "μαθητής (-ής) → ο + -ής." },
+  { prefix: "Το βιβλίο ", middle: " μαθητ", suffix: ".", translation: "Книга ученика.", correct: "του|ή", options: M_HS, caseType: "genitive", hint: "Тип -ής родительный → του + -ή." },
+  { prefix: "Ψάχνω ", middle: " μαθητ", suffix: ".", translation: "Ищу ученика.", correct: "τον|ή", options: M_HS, caseType: "accusative", hint: "Тип -ής винительный → τον + -ή." },
+  { prefix: "", middle: " φοιτητ", suffix: " μελετά.", translation: "Студент учится.", correct: "ο|ής", options: M_HS, caseType: "nominative", hint: "φοιτητής → ο + -ής." },
+  { prefix: "Η ζωή ", middle: " φοιτητ", suffix: ".", translation: "Жизнь студента.", correct: "του|ή", options: M_HS, caseType: "genitive", hint: "Родительный → του + -ή." },
+
+  // Fem -η, acc=την (πόλη, αγάπη, τέχνη)
+  { prefix: "", middle: " πόλ", suffix: " είναι μεγάλη.", translation: "Город большой.", correct: "η|η", options: F_H_N, caseType: "nominative", hint: "πόλη (-η) → η + -η." },
+  { prefix: "Το όνομα ", middle: " πόλ", suffix: " είναι Αθήνα.", translation: "Название города — Афины.", correct: "της|ης", options: F_H_N, caseType: "genitive", hint: "Тип -η родительный → της + -ης. Добавляется 'ς'!" },
+  { prefix: "Βλέπω ", middle: " πόλ", suffix: " από ψηλά.", translation: "Вижу город сверху.", correct: "την|η", options: F_H_N, caseType: "accusative", hint: "Перед π — την. Винительный → την + -η." },
+  { prefix: "", middle: " αγάπ", suffix: " είναι δυνατή.", translation: "Любовь сильна.", correct: "η|η", options: F_H_N, caseType: "nominative", hint: "αγάπη → η + -η." },
+  { prefix: "Ο ορισμός ", middle: " αγάπ", suffix: ".", translation: "Определение любви.", correct: "της|ης", options: F_H_N, caseType: "genitive", hint: "Родительный → της + -ης." },
+  { prefix: "Νιώθω ", middle: " αγάπ", suffix: ".", translation: "Чувствую любовь.", correct: "την|η", options: F_H_N, caseType: "accusative", hint: "Перед α (гласная) — την." },
+  { prefix: "", middle: " τέχν", suffix: " είναι ζωή.", translation: "Искусство — это жизнь.", correct: "η|η", options: F_H_N, caseType: "nominative", hint: "τέχνη → η + -η." },
+  { prefix: "Αγαπώ ", middle: " τέχν", suffix: ".", translation: "Люблю искусство.", correct: "την|η", options: F_H_N, caseType: "accusative", hint: "Перед τ — την." },
+
+  // Fem -η, acc=τη (σκέψη, λέξη)
+  { prefix: "", middle: " σκέψ", suffix: " μου είναι ξεκάθαρη.", translation: "Моя мысль ясна.", correct: "η|η", options: F_H_T, caseType: "nominative", hint: "σκέψη → η + -η." },
+  { prefix: "Διώχνω ", middle: " σκέψ", suffix: " αυτή.", translation: "Гоню эту мысль.", correct: "τη|η", options: F_H_T, caseType: "accusative", hint: "Перед σ — τη." },
+  { prefix: "", middle: " λέξ", suffix: " είναι σημαντική.", translation: "Слово важно.", correct: "η|η", options: F_H_T, caseType: "nominative", hint: "λέξη → η + -η." },
+  { prefix: "Γράφω ", middle: " λέξ", suffix: ".", translation: "Пишу слово.", correct: "τη|η", options: F_H_T, caseType: "accusative", hint: "Перед λ — τη." },
+
+  // Fem -α, acc=τη
+  { prefix: "", middle: " φωτογραφί", suffix: " είναι ωραία.", translation: "Фото красивое.", correct: "η|α", options: F_A_T, caseType: "nominative", hint: "φωτογραφία (-α) → η + -α." },
+  { prefix: "Η ομορφιά ", middle: " φωτογραφί", suffix: ".", translation: "Красота фото.", correct: "της|ας", options: F_A_T, caseType: "genitive", hint: "Тип -α родительный → της + -ας." },
+  { prefix: "Παίρνω ", middle: " φωτογραφί", suffix: ".", translation: "Делаю фото.", correct: "τη|α", options: F_A_T, caseType: "accusative", hint: "Перед φ — τη." },
+  { prefix: "", middle: " μέρ", suffix: " είναι όμορφη.", translation: "День прекрасный.", correct: "η|α", options: F_A_T, caseType: "nominative", hint: "μέρα → η + -α." },
+  { prefix: "Στο τέλος ", middle: " μέρ", suffix: ".", translation: "В конце дня.", correct: "της|ας", options: F_A_T, caseType: "genitive", hint: "Родительный → της + -ας." },
+  { prefix: "Περιμένω ", middle: " μέρ", suffix: " της γιορτής.", translation: "Жду день праздника.", correct: "τη|α", options: F_A_T, caseType: "accusative", hint: "Перед μ — τη." },
+  { prefix: "", middle: " χώρ", suffix: " είναι μεγάλη.", translation: "Страна большая.", correct: "η|α", options: F_A_T, caseType: "nominative", hint: "χώρα → η + -α." },
+  { prefix: "Η ιστορία ", middle: " χώρ", suffix: ".", translation: "История страны.", correct: "της|ας", options: F_A_T, caseType: "genitive", hint: "Родительный → της + -ας." },
+  { prefix: "Επισκέπτομαι ", middle: " χώρ", suffix: ".", translation: "Посещаю страну.", correct: "τη|α", options: F_A_T, caseType: "accusative", hint: "Перед χ — τη." },
+  { prefix: "", middle: " γλώσσ", suffix: " είναι δύσκολη.", translation: "Язык сложный.", correct: "η|α", options: F_A_T, caseType: "nominative", hint: "γλώσσα → η + -α." },
+  { prefix: "Μαθαίνω ", middle: " γλώσσ", suffix: ".", translation: "Учу язык.", correct: "τη|α", options: F_A_T, caseType: "accusative", hint: "Перед γ — τη." },
+
+  // Fem -α, acc=την (vowel)
+  { prefix: "", middle: " ώρ", suffix: " τελείωσε.", translation: "Час закончился.", correct: "η|α", options: F_A_N, caseType: "nominative", hint: "ώρα → η + -α." },
+  { prefix: "Στο τέλος ", middle: " ώρ", suffix: ".", translation: "В конце часа.", correct: "της|ας", options: F_A_N, caseType: "genitive", hint: "Родительный → της + -ας." },
+  { prefix: "Περιμένω ", middle: " ώρ", suffix: ".", translation: "Жду время.", correct: "την|α", options: F_A_N, caseType: "accusative", hint: "Перед ω (гласная) — την." },
+
+  // Fem -ή stressed
+  { prefix: "", middle: " μουσικ", suffix: " παίζει.", translation: "Музыка играет.", correct: "η|ή", options: F_HD, caseType: "nominative", hint: "μουσική — ударная -ή. Им. → η + -ή." },
+  { prefix: "Ο ρυθμός ", middle: " μουσικ", suffix: ".", translation: "Ритм музыки.", correct: "της|ής", options: F_HD, caseType: "genitive", hint: "Ударная -ή в родительном → της + -ής." },
+  { prefix: "Αγαπώ ", middle: " μουσικ", suffix: ".", translation: "Люблю музыку.", correct: "τη|ή", options: F_HD, caseType: "accusative", hint: "Перед μ — τη + -ή." },
+  { prefix: "", middle: " ζω", suffix: " είναι όμορφη.", translation: "Жизнь прекрасна.", correct: "η|ή", options: F_HD, caseType: "nominative", hint: "ζωή → η + -ή." },
+  { prefix: "Το νόημα ", middle: " ζω", suffix: ".", translation: "Смысл жизни.", correct: "της|ής", options: F_HD, caseType: "genitive", hint: "Родительный → της + -ής." },
+  { prefix: "Αγαπώ ", middle: " ζω", suffix: ".", translation: "Люблю жизнь.", correct: "τη|ή", options: F_HD, caseType: "accusative", hint: "Перед ζ — τη + -ή." },
+  { prefix: "", middle: " φων", suffix: " μου είναι δυνατή.", translation: "Мой голос сильный.", correct: "η|ή", options: F_HD, caseType: "nominative", hint: "φωνή → η + -ή." },
+  { prefix: "Ακούω ", middle: " φων", suffix: ".", translation: "Слышу голос.", correct: "τη|ή", options: F_HD, caseType: "accusative", hint: "Перед φ — τη + -ή." },
+
+  // Neut -ο
+  { prefix: "", middle: " πιάν", suffix: " είναι ωραίο.", translation: "Пианино красивое.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "πιάνο. Им. = вин. → το + -ο." },
+  { prefix: "Το χρώμα ", middle: " πιάν", suffix: ".", translation: "Цвет пианино.", correct: "του|ου", options: N_O, caseType: "genitive", hint: "Тип -ο родительный → του + -ου." },
+  { prefix: "Παίζω ", middle: " πιάν", suffix: ".", translation: "Играю на пианино.", correct: "το|ο", options: N_O, caseType: "accusative", hint: "Тип -ο вин. = им. → το + -ο." },
+  { prefix: "", middle: " βιβλί", suffix: " είναι ωραίο.", translation: "Книга красивая.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "βιβλίο → το + -ο." },
+  { prefix: "Ο τίτλος ", middle: " βιβλί", suffix: ".", translation: "Название книги.", correct: "του|ου", options: N_O, caseType: "genitive", hint: "Родительный → του + -ου." },
+  { prefix: "Διαβάζω ", middle: " βιβλί", suffix: ".", translation: "Читаю книгу.", correct: "το|ο", options: N_O, caseType: "accusative", hint: "Винительный → το + -ο." },
+  { prefix: "", middle: " αυτοκίνητ", suffix: " είναι κόκκινο.", translation: "Машина красная.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "αυτοκίνητο → το + -ο." },
+  { prefix: "Το χρώμα ", middle: " αυτοκινήτ", suffix: ".", translation: "Цвет машины.", correct: "του|ου", options: N_O, caseType: "genitive", hint: "Родительный → του + -ου. Ударение сдвинулось." },
+  { prefix: "", middle: " δώρ", suffix: " είναι ωραίο.", translation: "Подарок красивый.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "δώρο → το + -ο." },
+  { prefix: "Παίρνω ", middle: " δώρ", suffix: ".", translation: "Беру подарок.", correct: "το|ο", options: N_O, caseType: "accusative", hint: "Винительный → το + -ο." },
+  { prefix: "Η διεύθυνση ", middle: " σχολεί", suffix: ".", translation: "Адрес школы.", correct: "του|ου", options: N_O, caseType: "genitive", hint: "Родительный → του + -ου. Это была твоя ошибка!" },
+  { prefix: "", middle: " δέντρ", suffix: " είναι ψηλό.", translation: "Дерево высокое.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "δέντρο → το + -ο." },
+
+  // Neut -ι
+  { prefix: "", middle: " σπίτ", suffix: " είναι μεγάλο.", translation: "Дом большой.", correct: "το|ι", options: N_I, caseType: "nominative", hint: "σπίτι (-ι) → το + -ι." },
+  { prefix: "Η πόρτα ", middle: " σπιτ", suffix: ".", translation: "Дверь дома.", correct: "του|ιού", options: N_I, caseType: "genitive", hint: "Тип -ι родительный → του + -ιού." },
+  { prefix: "Βλέπω ", middle: " σπίτ", suffix: ".", translation: "Вижу дом.", correct: "το|ι", options: N_I, caseType: "accusative", hint: "Винительный → το + -ι." },
+  { prefix: "", middle: " παιδ", suffix: " παίζει.", translation: "Ребёнок играет.", correct: "το|ί", options: N_I_S, caseType: "nominative", hint: "παιδί — ударная -ί. Им. → το + -ί." },
+  { prefix: "Η μητέρα ", middle: " παιδ", suffix: ".", translation: "Мать ребёнка.", correct: "του|ιού", options: N_I_S, caseType: "genitive", hint: "Родительный → του + -ιού." },
+
+  // Neut -μα
+  { prefix: "", middle: " μάθη", suffix: " είναι δύσκολο.", translation: "Урок сложный.", correct: "το|μα", options: N_MA, caseType: "nominative", hint: "μάθημα — особый тип -μα. Им. → το + -μα." },
+  { prefix: "Ο τίτλος ", middle: " μαθή", suffix: ".", translation: "Название урока.", correct: "του|ματος", options: N_MA, caseType: "genitive", hint: "Тип -μα в родительном → του + -ματος. Добавляется -τος!" },
+  { prefix: "Διαβάζω ", middle: " μάθη", suffix: ".", translation: "Читаю урок.", correct: "το|μα", options: N_MA, caseType: "accusative", hint: "Тип -μα винительный = именительный → το + -μα." },
+  { prefix: "", middle: " όνο", suffix: " μου είναι Σβιάτ.", translation: "Меня зовут Свят.", correct: "το|μα", options: N_MA, caseType: "nominative", hint: "όνομα — тип -μα → το + -μα." },
+  { prefix: "Το νόημα ", middle: " ονό", suffix: ".", translation: "Смысл имени.", correct: "του|ματος", options: N_MA, caseType: "genitive", hint: "Родительный -μα → του + -ματος." },
+  { prefix: "", middle: " πρόβλη", suffix: " είναι σοβαρό.", translation: "Проблема серьёзная.", correct: "το|μα", options: N_MA, caseType: "nominative", hint: "πρόβλημα → το + -μα." },
+  { prefix: "Η λύση ", middle: " προβλή", suffix: ".", translation: "Решение проблемы.", correct: "του|ματος", options: N_MA, caseType: "genitive", hint: "Родительный → του + -ματος." },
+  { prefix: "", middle: " χρώ", suffix: " είναι όμορφο.", translation: "Цвет красивый.", correct: "το|μα", options: N_MA, caseType: "nominative", hint: "χρώμα → το + -μα." },
+  { prefix: "Διαλέγω ", middle: " χρώ", suffix: ".", translation: "Выбираю цвет.", correct: "το|μα", options: N_MA, caseType: "accusative", hint: "Винительный → το + -μα." },
+  { prefix: "", middle: " γράμ", suffix: " ήρθε.", translation: "Письмо пришло.", correct: "το|μα", options: N_MA, caseType: "nominative", hint: "γράμμα → το + -μα." },
+  { prefix: "Στέλνω ", middle: " γράμ", suffix: ".", translation: "Отправляю письмо.", correct: "το|μα", options: N_MA, caseType: "accusative", hint: "Винительный → το + -μα." },
+];
+
+// =====================================================================
+// Helpers
+// =====================================================================
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+const initialStats = {
+  totalAnswered: 0, totalCorrect: 0, streak: 0, bestStreak: 0,
+  byCase: {
+    nominative: { correct: 0, total: 0 },
+    genitive:   { correct: 0, total: 0 },
+    accusative: { correct: 0, total: 0 },
+  },
+};
+
+const initialSession = { answered: 0, correct: 0 };
+
+// =====================================================================
+// App
+// =====================================================================
+function App() {
+  const [screen, setScreen] = useState('home');
+  const [stats, setStats] = useState(initialStats);
+  const [statsLoaded, setStatsLoaded] = useState(false);
+  const [session, setSession] = useState(initialSession);
+  const [deck, setDeck] = useState([]);
+  const [deckIdx, setDeckIdx] = useState(0);
+  const [selected, setSelected] = useState(null);
+  const [revealed, setRevealed] = useState(false);
+  const [feedbackAnim, setFeedbackAnim] = useState(false);
+
+  // Load stats once
+  useEffect(() => {
+    cloudGet(STORAGE_KEY).then((val) => {
+      if (val) {
+        try { setStats(JSON.parse(val)); } catch(e) {}
+      }
+      setStatsLoaded(true);
+    });
+  }, []);
+
+  // Telegram BackButton — show on practice, hide on home
+  useEffect(() => {
+    if (!tg || !tg.BackButton) return;
+    const goHome = () => { setScreen('home'); };
+    if (screen === 'practice') {
+      try { tg.BackButton.show(); } catch(e) {}
+      try { tg.BackButton.onClick(goHome); } catch(e) {}
+      return () => {
+        try { tg.BackButton.hide(); } catch(e) {}
+        try { tg.BackButton.offClick(goHome); } catch(e) {}
+      };
+    } else {
+      try { tg.BackButton.hide(); } catch(e) {}
+    }
+  }, [screen]);
+
+  const persistStats = (next) => {
+    setStats(next);
+    cloudSet(STORAGE_KEY, JSON.stringify(next));
+  };
+
+  const resetStats = () => {
+    setStats(initialStats);
+    cloudDel(STORAGE_KEY);
+  };
+
+  const startMode = (mode) => {
+    haptic.medium();
+    let bank;
+    if (mode === 'articles') bank = ARTICLE_EXERCISES.map(e => Object.assign({}, e, { kind: 'article' }));
+    else if (mode === 'endings') bank = ENDING_EXERCISES.map(e => Object.assign({}, e, { kind: 'ending' }));
+    else bank = ARTICLE_EXERCISES.map(e => Object.assign({}, e, { kind: 'article' }))
+                  .concat(ENDING_EXERCISES.map(e => Object.assign({}, e, { kind: 'ending' })));
+    setDeck(shuffle(bank));
+    setDeckIdx(0);
+    setSelected(null);
+    setRevealed(false);
+    setSession(initialSession);
+    setScreen('practice');
+  };
+
+  const current = deck[deckIdx];
+
+  const submitAnswer = (answer) => {
+    if (revealed) return;
+    setSelected(answer);
+    setRevealed(true);
+    setFeedbackAnim(true);
+    const correct = answer === current.correct;
+    if (correct) haptic.success(); else haptic.error();
+
+    const caseKey = current.caseType;
+    const next = Object.assign({}, stats, {
+      totalAnswered: stats.totalAnswered + 1,
+      totalCorrect: stats.totalCorrect + (correct ? 1 : 0),
+      streak: correct ? stats.streak + 1 : 0,
+      bestStreak: correct ? Math.max(stats.bestStreak, stats.streak + 1) : stats.bestStreak,
+      byCase: Object.assign({}, stats.byCase, {
+        [caseKey]: {
+          correct: ((stats.byCase[caseKey] && stats.byCase[caseKey].correct) || 0) + (correct ? 1 : 0),
+          total:   ((stats.byCase[caseKey] && stats.byCase[caseKey].total) || 0) + 1,
+        }
+      }),
+    });
+    persistStats(next);
+    setSession({
+      answered: session.answered + 1,
+      correct: session.correct + (correct ? 1 : 0),
+    });
+    setTimeout(() => setFeedbackAnim(false), 400);
+  };
+
+  const nextQuestion = () => {
+    haptic.light();
+    let nextIdx = deckIdx + 1;
+    if (nextIdx >= deck.length) {
+      setDeck(shuffle(deck));
+      nextIdx = 0;
+    }
+    setDeckIdx(nextIdx);
+    setSelected(null);
+    setRevealed(false);
+  };
+
+  if (!statsLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="font-display text-3xl font-semibold mb-2" style={{ color: '#1A2A4A' }}>Πτώσεις</div>
+          <div className="text-sm" style={{ color: '#5A6379' }}>Загрузка…</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen w-full">
+      <div className="max-w-md mx-auto px-5 py-6 min-h-screen flex flex-col">
+        {/* Header */}
+        <header className="flex items-center justify-between mb-6">
+          <button onClick={() => { haptic.light(); setScreen('home'); }} className="flex items-center gap-2" style={{ color: '#1A2A4A' }}>
+            <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: '#1A2A4A' }}>
+              <span className="font-display text-white text-lg leading-none">Π</span>
+            </div>
+            <div className="font-display text-base font-semibold tracking-tight">Πτώσεις</div>
+          </button>
+          <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ backgroundColor: stats.streak > 0 ? '#FBE9D9' : '#F0EAD9' }}>
+              <Flame size={14} fill={stats.streak > 0 ? '#B5613B' : 'none'} style={{ color: '#B5613B' }} />
+              <span className="font-semibold tabular" style={{ color: '#B5613B' }}>{stats.streak}</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ backgroundColor: '#EAF0DC' }}>
+              <CheckIcon size={14} strokeWidth={3} style={{ color: '#6B7E3A' }} />
+              <span className="font-semibold tabular" style={{ color: '#4A5727' }}>
+                {stats.totalCorrect}<span style={{ color: '#8AA655', fontWeight: 400 }}>/{stats.totalAnswered}</span>
+              </span>
+            </div>
+          </div>
+        </header>
+
+        {screen === 'home' && (
+          <HomeScreen stats={stats} onStart={startMode} onReset={resetStats} />
+        )}
+
+        {screen === 'practice' && current && (
+          <PracticeScreen
+            current={current}
+            session={session}
+            deckSize={deck.length}
+            deckIdx={deckIdx}
+            selected={selected}
+            revealed={revealed}
+            onAnswer={submitAnswer}
+            onNext={nextQuestion}
+            onBack={() => setScreen('home')}
+            feedbackAnim={feedbackAnim}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+// =====================================================================
+// Home Screen
+// =====================================================================
+function HomeScreen({ stats, onStart, onReset }) {
+  const [showReset, setShowReset] = useState(false);
+  const isFirstTime = stats.totalAnswered === 0;
+  const accuracy = stats.totalAnswered > 0 ? Math.round((stats.totalCorrect / stats.totalAnswered) * 100) : 0;
+
+  return (
+    <div className="flex-1 flex flex-col animate-fade">
+      <div className="mb-8">
+        <p className="text-sm uppercase tracking-widest mb-2" style={{ color: '#B5613B', letterSpacing: '0.15em' }}>
+          {isFirstTime ? 'Καλώς ήρθες' : 'Συνεχίζουμε'}
+        </p>
+        <h1 className="font-display text-4xl font-semibold leading-tight" style={{ color: '#1A2A4A' }}>
+          {isFirstTime ? (
+            <>Тренажёр <em style={{ color: '#B5613B' }}>греческих</em> падежей</>
+          ) : (
+            <>С возвращением.<br /><span style={{ color: '#B5613B' }} className="italic">Продолжаем.</span></>
+          )}
+        </h1>
+      </div>
+
+      {!isFirstTime && (
+        <div className="rounded-2xl p-5 mb-6 animate-slide-up" style={{
+          backgroundColor: 'white',
+          boxShadow: '0 1px 3px rgba(26, 42, 74, 0.06), 0 4px 20px rgba(26, 42, 74, 0.04)',
+        }}>
+          <div className="grid grid-cols-3 gap-4 mb-4">
+            <Stat label="Ответов" value={stats.totalAnswered} />
+            <Stat label="Точность" value={`${accuracy}%`} />
+            <Stat label="Рекорд" value={stats.bestStreak} icon={<Flame size={14} style={{ color: '#B5613B' }} />} />
+          </div>
+          <div className="pt-4 border-t" style={{ borderColor: '#F0EAD9' }}>
+            <p className="text-xs uppercase tracking-wider mb-3" style={{ color: '#5A6379', letterSpacing: '0.1em' }}>По падежам</p>
+            <div className="space-y-2">
+              {Object.entries(stats.byCase).map(([key, data]) => {
+                const labels = { nominative: 'Именительный', genitive: 'Родительный', accusative: 'Винительный' };
+                const pct = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+                return (
+                  <div key={key} className="flex items-center gap-3">
+                    <span className="text-sm flex-shrink-0 w-32" style={{ color: '#1A2A4A' }}>{labels[key]}</span>
+                    <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: '#F0EAD9' }}>
+                      <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: '#6B7E3A' }} />
+                    </div>
+                    <span className="text-xs font-medium w-12 text-right tabular" style={{ color: '#5A6379' }}>{data.total > 0 ? `${pct}%` : '—'}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="space-y-3 mb-4">
+        <p className="text-xs uppercase tracking-widest mb-3" style={{ color: '#5A6379', letterSpacing: '0.15em' }}>
+          Выбери тренировку
+        </p>
+
+        <ModeCard title="Артикли" subtitle="ο, η, το, του, της, τον, τη, την" description="Базовый уровень — выбери правильный артикль" icon={<BookOpen size={20} />} accent="#1A2A4A" onClick={() => onStart('articles')} recommended={isFirstTime} />
+        <ModeCard title="Окончания" subtitle="артикль + окончание" description="Подставь и артикль, и окончание слова" icon={<TypeIcon size={20} />} accent="#B5613B" onClick={() => onStart('endings')} />
+        <ModeCard title="Микс" subtitle="Всё вместе" description="Случайные задания обоих типов" icon={<Award size={20} />} accent="#6B7E3A" onClick={() => onStart('mixed')} />
+      </div>
+
+      {!isFirstTime && (
+        <div className="mt-auto pt-6 text-center">
+          {!showReset ? (
+            <button onClick={() => { haptic.light(); setShowReset(true); }} className="text-xs flex items-center gap-1.5 mx-auto opacity-60 active:opacity-100 transition-opacity" style={{ color: '#5A6379' }}>
+              <RotateCcw size={12} />
+              Сбросить прогресс
+            </button>
+          ) : (
+            <div className="flex items-center justify-center gap-2 text-xs" style={{ color: '#5A6379' }}>
+              <span>Точно?</span>
+              <button onClick={() => { haptic.medium(); onReset(); setShowReset(false); }} className="font-semibold underline" style={{ color: '#A04438' }}>Да, сбросить</button>
+              <span>·</span>
+              <button onClick={() => setShowReset(false)} className="font-semibold underline" style={{ color: '#1A2A4A' }}>Нет</button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Stat({ label, value, icon }) {
+  return (
+    <div>
+      <p className="text-xs uppercase tracking-wider mb-1" style={{ color: '#5A6379', letterSpacing: '0.1em' }}>{label}</p>
+      <div className="font-display text-2xl font-semibold flex items-center gap-1.5 tabular" style={{ color: '#1A2A4A' }}>
+        {value}{icon}
+      </div>
+    </div>
+  );
+}
+
+function ModeCard({ title, subtitle, description, icon, accent, onClick, recommended }) {
+  return (
+    <button onClick={onClick} className="w-full text-left rounded-2xl p-4 transition-all active:scale-[0.99] relative overflow-hidden" style={{
+      backgroundColor: 'white',
+      boxShadow: '0 1px 3px rgba(26, 42, 74, 0.06), 0 4px 20px rgba(26, 42, 74, 0.04)',
+    }}>
+      {recommended && (
+        <div className="absolute top-3 right-3 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full font-semibold" style={{ backgroundColor: '#FBF1E0', color: '#B5613B' }}>
+          Старт
+        </div>
+      )}
+      <div className="flex items-start gap-3">
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${accent}12`, color: accent }}>
+          {icon}
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="font-display text-xl font-semibold leading-tight" style={{ color: '#1A2A4A' }}>{title}</h3>
+          <p className="text-xs mt-0.5 mb-1.5 font-display italic" style={{ color: accent }}>{subtitle}</p>
+          <p className="text-sm leading-snug" style={{ color: '#5A6379' }}>{description}</p>
+        </div>
+        <ChevronRight size={20} className="flex-shrink-0 mt-1" style={{ color: '#5A6379' }} />
+      </div>
+    </button>
+  );
+}
+
+// =====================================================================
+// Practice Screen
+// =====================================================================
+function PracticeScreen({ current, session, deckSize, deckIdx, selected, revealed, onAnswer, onNext, onBack, feedbackAnim }) {
+  const isCorrect = revealed && selected === current.correct;
+  const isWrong = revealed && selected !== current.correct;
+  const options = current.kind === 'article' ? ARTICLE_OPTIONS : current.options;
+
+  return (
+    <div className="flex-1 flex flex-col animate-fade">
+      {/* Progress */}
+      <div className="mb-4">
+        <div className="flex items-center justify-between mb-2 text-xs" style={{ color: '#5A6379' }}>
+          <span className="uppercase tracking-widest font-medium" style={{ letterSpacing: '0.12em' }}>
+            {current.kind === 'article' ? 'Подставь артикль' : 'Подставь артикль и окончание'}
+          </span>
+          <span className="font-semibold tabular">
+            <span style={{ color: '#1A2A4A' }}>{deckIdx + 1}</span>
+            <span> / {deckSize}</span>
+          </span>
+        </div>
+        <div className="h-1 rounded-full overflow-hidden" style={{ backgroundColor: '#F0EAD9' }}>
+          <div className="h-full rounded-full transition-all duration-500" style={{
+            width: `${((deckIdx + (revealed ? 1 : 0)) / deckSize) * 100}%`,
+            backgroundColor: '#1A2A4A',
+          }} />
+        </div>
+        {session.answered > 0 && (
+          <div className="flex items-center gap-3 mt-2 text-xs" style={{ color: '#5A6379' }}>
+            <span>В этой сессии:</span>
+            <span className="flex items-center gap-1">
+              <CheckIcon size={12} strokeWidth={3} style={{ color: '#6B7E3A' }} />
+              <span className="font-semibold tabular" style={{ color: '#4A5727' }}>{session.correct}</span>
+            </span>
+            <span className="flex items-center gap-1">
+              <XIcon size={12} strokeWidth={3} style={{ color: '#A04438' }} />
+              <span className="font-semibold tabular" style={{ color: '#7A2F26' }}>{session.answered - session.correct}</span>
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Question card */}
+      <div
+        className={`rounded-3xl p-7 mb-5 ${feedbackAnim && isWrong ? 'animate-shake' : ''} ${feedbackAnim && isCorrect ? 'animate-pop' : ''}`}
+        style={{
+          backgroundColor: 'white',
+          boxShadow: '0 2px 4px rgba(26, 42, 74, 0.06), 0 12px 32px rgba(26, 42, 74, 0.06)',
+          border: revealed ? `2px solid ${isCorrect ? '#6B7E3A' : '#A04438'}` : '2px solid transparent',
+          transition: 'border-color 0.3s ease',
+        }}
+      >
+        {current.kind === 'article' ? (
+          <ArticleQuestion ex={current} revealed={revealed} />
+        ) : (
+          <EndingQuestion ex={current} revealed={revealed} isCorrect={isCorrect} />
+        )}
+
+        <p className="text-sm italic mt-5 pt-5 border-t" style={{ color: '#5A6379', borderColor: '#F0EAD9' }}>
+          {current.translation}
+        </p>
+      </div>
+
+      {/* Options */}
+      {current.kind === 'article' ? (
+        <div className="grid grid-cols-4 gap-2 mb-4">
+          {ARTICLE_OPTIONS.map(opt => (
+            <AnswerButton key={opt} label={opt}
+              onClick={() => onAnswer(opt)}
+              isSelected={selected === opt}
+              isCorrect={revealed && opt === current.correct}
+              isWrong={revealed && selected === opt && opt !== current.correct}
+              disabled={revealed} />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-2 mb-4">
+          {options.map(opt => {
+            const [art, end] = opt.split('|');
+            return (
+              <AnswerButton key={opt} label={`${art}  ·  -${end}`}
+                onClick={() => onAnswer(opt)}
+                isSelected={selected === opt}
+                isCorrect={revealed && opt === current.correct}
+                isWrong={revealed && selected === opt && opt !== current.correct}
+                disabled={revealed} />
+            );
+          })}
+        </div>
+      )}
+
+      {/* Feedback */}
+      {revealed && (
+        <div className="rounded-2xl p-4 mb-4 animate-slide-up" style={{
+          backgroundColor: isCorrect ? '#F1F4E8' : '#FBE9E6',
+          borderLeft: `3px solid ${isCorrect ? '#6B7E3A' : '#A04438'}`,
+        }}>
+          <div className="flex items-start gap-2.5">
+            <div className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style={{
+              backgroundColor: isCorrect ? '#6B7E3A' : '#A04438',
+            }}>
+              {isCorrect ? <CheckIcon size={14} strokeWidth={3} style={{ color: 'white' }} /> : <XIcon size={14} strokeWidth={3} style={{ color: 'white' }} />}
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-sm mb-1" style={{ color: isCorrect ? '#4A5727' : '#7A2F26' }}>
+                {isCorrect ? 'Верно!' : (
+                  <>Правильно: <span className="font-display italic">
+                    {current.kind === 'ending'
+                      ? (() => { const [a, e] = current.correct.split('|'); return `${a}  ·  -${e}`; })()
+                      : current.correct}
+                  </span></>
+                )}
+              </p>
+              <p className="text-sm leading-snug" style={{ color: isCorrect ? '#4A5727' : '#7A2F26' }}>
+                {current.hint}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Action button */}
+      <div className="mt-auto">
+        {revealed ? (
+          <button onClick={onNext} className="w-full rounded-2xl py-4 px-6 font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.99]" style={{ backgroundColor: '#1A2A4A', color: 'white' }}>
+            Дальше<ChevronRight size={18} />
+          </button>
+        ) : (
+          <button onClick={onBack} className="w-full text-sm py-3 transition-opacity opacity-60 active:opacity-100" style={{ color: '#5A6379' }}>
+            ← На главную
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ArticleQuestion({ ex, revealed }) {
+  const parts = ex.sentence.split('__');
+  return (
+    <div className="font-display text-2xl leading-relaxed" style={{ color: '#1A2A4A' }}>
+      {parts[0]}
+      <span className="inline-block mx-1 px-3 py-0.5 rounded-md" style={{
+        backgroundColor: revealed ? '#6B7E3A20' : '#F7F2E8',
+        color: revealed ? '#6B7E3A' : '#B5613B',
+        minWidth: '3ch', textAlign: 'center', fontStyle: 'italic',
+      }}>
+        {revealed ? ex.correct : '___'}
+      </span>
+      {parts[1]}
+    </div>
+  );
+}
+
+function EndingQuestion({ ex, revealed, isCorrect }) {
+  const color = revealed ? (isCorrect ? '#6B7E3A' : '#A04438') : '#B5613B';
+  let art = '___', end = '___';
+  if (revealed) {
+    const split = ex.correct.split('|');
+    art = split[0]; end = split[1];
+  }
+  const blankStyle = {
+    color: color,
+    backgroundColor: revealed ? `${color}20` : '#F7F2E8',
+    padding: '0 4px',
+    borderRadius: '4px',
+    fontStyle: revealed ? 'normal' : 'italic',
+    fontWeight: 'bold',
+  };
+  return (
+    <div className="font-display text-2xl leading-relaxed" style={{ color: '#1A2A4A' }}>
+      {ex.prefix}
+      <span style={blankStyle}>{art}</span>
+      {ex.middle}
+      <span style={blankStyle}>{end}</span>
+      {ex.suffix}
+    </div>
+  );
+}
+
+function AnswerButton({ label, onClick, isSelected, isCorrect, isWrong, disabled }) {
+  let bg = 'white', color = '#1A2A4A', borderColor = '#E8E0CC';
+  if (isCorrect) { bg = '#6B7E3A'; color = 'white'; borderColor = '#6B7E3A'; }
+  else if (isWrong) { bg = '#A04438'; color = 'white'; borderColor = '#A04438'; }
+  else if (isSelected) { borderColor = '#1A2A4A'; }
+
+  const handleClick = () => {
+    if (disabled) return;
+    haptic.light();
+    onClick();
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      disabled={disabled}
+      className={`rounded-xl transition-all py-3 text-center ${disabled ? '' : 'active:scale-[0.97]'}`}
+      style={{
+        backgroundColor: bg, color: color,
+        border: `2px solid ${borderColor}`,
+        opacity: disabled && !isCorrect && !isWrong ? 0.5 : 1,
+      }}
+    >
+      <div className="font-display text-lg font-semibold">{label}</div>
+    </button>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
