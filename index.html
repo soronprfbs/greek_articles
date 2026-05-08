@@ -185,6 +185,86 @@ const ARTICLE_EXERCISES = [
   { sentence: "__ καφές είναι ζεστός.", translation: "Кофе горячий.", correct: "ο", caseType: "nominative", hint: "Именительный, м.р. → ο." },
   { sentence: "__ γιαγιά μαγειρεύει.", translation: "Бабушка готовит.", correct: "η", caseType: "nominative", hint: "Именительный, ж.р. → η." },
   { sentence: "__ πιάνο παίζει.", translation: "Пианино играет.", correct: "το", caseType: "nominative", hint: "Именительный, ср.р. → το." },
+
+  // ---- Genitive (20) ----
+
+  // Places
+  { sentence: "Η έξοδος __ σταθμού.", translation: "Выход со станции.", correct: "του", caseType: "genitive", hint: "σταθμός м.р. -ός → родит. → του." },
+  { sentence: "Η είσοδος __ μουσείου.", translation: "Вход в музей.", correct: "του", caseType: "genitive", hint: "μουσείο ср.р. → родит. → του." },
+  { sentence: "Η ώρα __ εστιατορίου.", translation: "Время работы ресторана.", correct: "του", caseType: "genitive", hint: "εστιατόριο ср.р. → родит. → του." },
+  { sentence: "Η θέση __ αεροδρομίου.", translation: "Расположение аэропорта.", correct: "του", caseType: "genitive", hint: "αεροδρόμιο ср.р. → родит. → του." },
+  { sentence: "Το ωράριο __ βιβλιοθήκης.", translation: "Расписание библиотеки.", correct: "της", caseType: "genitive", hint: "βιβλιοθήκη ж.р. -η → родит. → της." },
+  { sentence: "Η ομορφιά __ παραλίας.", translation: "Красота пляжа.", correct: "της", caseType: "genitive", hint: "παραλία ж.р. -α → родит. → της." },
+  { sentence: "Το κέντρο __ πλατείας.", translation: "Центр площади.", correct: "της", caseType: "genitive", hint: "πλατεία ж.р. -α → родит. → της." },
+
+  // People / abstract
+  { sentence: "Το όνομα __ συναδέλφου μου.", translation: "Имя моего коллеги.", correct: "του", caseType: "genitive", hint: "συνάδελφος м.р. -ος → родит. → του." },
+  { sentence: "Η γνώμη __ γείτονα μου.", translation: "Мнение моего соседа.", correct: "του", caseType: "genitive", hint: "γείτονας м.р. -ας → родит. → του." },
+  { sentence: "Η επιτυχία __ αγώνα.", translation: "Успех в соревновании.", correct: "του", caseType: "genitive", hint: "αγώνας м.р. -ας → родит. → του." },
+  { sentence: "Ο φόβος __ αποτυχίας.", translation: "Страх перед неудачей.", correct: "της", caseType: "genitive", hint: "αποτυχία ж.р. -α → родит. → της." },
+  { sentence: "Η αιτία __ ερώτησης.", translation: "Причина вопроса.", correct: "της", caseType: "genitive", hint: "ερώτηση ж.р. -η → родит. → της." },
+  { sentence: "Το αποτέλεσμα __ εξέτασης.", translation: "Результат экзамена.", correct: "της", caseType: "genitive", hint: "εξέταση ж.р. -η → родит. → της." },
+
+  // Nature / daily life
+  { sentence: "Η δύναμη __ βροχής.", translation: "Сила дождя.", correct: "της", caseType: "genitive", hint: "βροχή ж.р. -ή → родит. → της." },
+  { sentence: "Το χρώμα __ χιονιού.", translation: "Цвет снега.", correct: "του", caseType: "genitive", hint: "χιόνι ср.р. -ι → родит. → του." },
+  { sentence: "Η αρχή __ εποχής.", translation: "Начало сезона.", correct: "της", caseType: "genitive", hint: "εποχή ж.р. -ή → родит. → της." },
+  { sentence: "Η γεύση __ φαγητού.", translation: "Вкус еды.", correct: "του", caseType: "genitive", hint: "φαγητό ср.р. -ό → родит. → του." },
+  { sentence: "Το ποτήρι __ νερού.", translation: "Стакан воды.", correct: "του", caseType: "genitive", hint: "νερό ср.р. -ό → родит. → του." },
+  { sentence: "Το τέλος __ ταξιδιού.", translation: "Конец путешествия.", correct: "του", caseType: "genitive", hint: "ταξίδι ср.р. -ι → родит. → του." },
+  { sentence: "Η λάμψη __ φεγγαριού.", translation: "Свет луны.", correct: "του", caseType: "genitive", hint: "φεγγάρι ср.р. -ι → родит. → του." },
+
+  // ---- Accusative (22) ----
+
+  // Places
+  { sentence: "Παίρνω __ σταθμό.", translation: "Еду на станцию (сажусь).", correct: "τον", caseType: "accusative", hint: "σταθμός м.р. -ός → вин. → τον." },
+  { sentence: "Επισκέπτομαι __ μουσείο.", translation: "Посещаю музей.", correct: "το", caseType: "accusative", hint: "μουσείο ср.р. → вин. → το." },
+  { sentence: "Κλείνω __ εστιατόριο.", translation: "Бронирую ресторан.", correct: "το", caseType: "accusative", hint: "εστιατόριο ср.р. → вин. → το." },
+  { sentence: "Πηγαίνω σε __ παραλία.", translation: "Иду на пляж.", correct: "την", caseType: "accusative", hint: "Перед π — την. παραλία ж.р." },
+  { sentence: "Βλέπω __ βιβλιοθήκη.", translation: "Вижу библиотеку.", correct: "τη", caseType: "accusative", hint: "Перед β — τη. βιβλιοθήκη ж.р." },
+  { sentence: "Χτίζουν __ εκκλησία.", translation: "Строят церковь.", correct: "την", caseType: "accusative", hint: "Перед ε (гласная) — την." },
+  { sentence: "Ψάχνω __ αίθουσα.", translation: "Ищу аудиторию.", correct: "την", caseType: "accusative", hint: "Перед α (гласная) — την." },
+
+  // Food / daily objects
+  { sentence: "Θέλω __ σούπα.", translation: "Хочу суп.", correct: "τη", caseType: "accusative", hint: "Перед σ — τη. σούπα ж.р." },
+  { sentence: "Παραγγέλνω __ σαλάτα.", translation: "Заказываю салат.", correct: "τη", caseType: "accusative", hint: "Перед σ — τη. σαλάτα ж.р." },
+  { sentence: "Πίνω __ χυμό.", translation: "Пью сок.", correct: "τον", caseType: "accusative", hint: "χυμός м.р. -ός → вин. → τον." },
+  { sentence: "Τρώω __ φρούτο.", translation: "Ем фрукт.", correct: "το", caseType: "accusative", hint: "φρούτο ср.р. → вин. → το." },
+  { sentence: "Πίνω __ νερό.", translation: "Пью воду.", correct: "το", caseType: "accusative", hint: "νερό ср.р. -ό → вин. → το." },
+  { sentence: "Ετοιμάζω __ φαγητό.", translation: "Готовлю еду.", correct: "το", caseType: "accusative", hint: "φαγητό ср.р. -ό → вин. → το." },
+  { sentence: "Αγοράζω __ φάρμακο.", translation: "Покупаю лекарство.", correct: "το", caseType: "accusative", hint: "φάρμακο ср.р. → вин. → το." },
+
+  // People / abstract
+  { sentence: "Καλώ __ συνάδελφο.", translation: "Звоню коллеге.", correct: "τον", caseType: "accusative", hint: "συνάδελφος м.р. -ος → вин. → τον." },
+  { sentence: "Βοηθώ __ γείτονα.", translation: "Помогаю соседу.", correct: "τον", caseType: "accusative", hint: "γείτονας м.р. -ας → вин. → τον." },
+  { sentence: "Νιώθω __ χαρά.", translation: "Чувствую радость.", correct: "τη", caseType: "accusative", hint: "Перед χ — τη. χαρά ж.р. -ά." },
+  { sentence: "Έχω __ ελπίδα.", translation: "У меня есть надежда.", correct: "την", caseType: "accusative", hint: "Перед ε (гласная) — την." },
+  { sentence: "Χάνω __ υπομονή.", translation: "Теряю терпение.", correct: "την", caseType: "accusative", hint: "Перед υ (гласная) — την. υπομονή ж.р. -ή." },
+  { sentence: "Παίρνω __ απόφαση.", translation: "Принимаю решение.", correct: "την", caseType: "accusative", hint: "Перед α (гласная) — την." },
+  { sentence: "Κάνω __ άσκηση.", translation: "Делаю упражнение.", correct: "την", caseType: "accusative", hint: "Перед α (гласная) — την." },
+  { sentence: "Διαβάζω __ εφημερίδα.", translation: "Читаю газету.", correct: "την", caseType: "accusative", hint: "Перед ε (гласная) — την." },
+
+  // ---- Nominative (18) ----
+
+  { sentence: "__ σταθμός είναι κοντά.", translation: "Станция рядом.", correct: "ο", caseType: "nominative", hint: "σταθμός м.р. -ός → им. → ο." },
+  { sentence: "__ μουσείο είναι κλειστό.", translation: "Музей закрыт.", correct: "το", caseType: "nominative", hint: "μουσείο ср.р. → им. → το." },
+  { sentence: "__ εστιατόριο είναι γεμάτο.", translation: "Ресторан полон.", correct: "το", caseType: "nominative", hint: "εστιατόριο ср.р. → им. → το." },
+  { sentence: "__ βιβλιοθήκη είναι μεγάλη.", translation: "Библиотека большая.", correct: "η", caseType: "nominative", hint: "βιβλιοθήκη ж.р. -η → им. → η." },
+  { sentence: "__ παραλία είναι πολύ ωραία.", translation: "Пляж очень красивый.", correct: "η", caseType: "nominative", hint: "παραλία ж.р. -α → им. → η." },
+  { sentence: "__ σούπα είναι ζεστή.", translation: "Суп горячий.", correct: "η", caseType: "nominative", hint: "σούπα ж.р. -α → им. → η." },
+  { sentence: "__ γείτονας μου είναι φιλικός.", translation: "Мой сосед дружелюбный.", correct: "ο", caseType: "nominative", hint: "γείτονας м.р. -ας → им. → ο." },
+  { sentence: "__ συνάδελφος μου έλειψε.", translation: "Мой коллега отсутствовал.", correct: "ο", caseType: "nominative", hint: "συνάδελφος м.р. -ος → им. → ο." },
+  { sentence: "__ φόβος είναι φυσιολογικός.", translation: "Страх — это нормально.", correct: "ο", caseType: "nominative", hint: "φόβος м.р. -ος → им. → ο." },
+  { sentence: "__ βροχή είναι δυνατή.", translation: "Дождь сильный.", correct: "η", caseType: "nominative", hint: "βροχή ж.р. -ή → им. → η." },
+  { sentence: "__ εποχή αλλάζει.", translation: "Сезон меняется.", correct: "η", caseType: "nominative", hint: "εποχή ж.р. -ή → им. → η." },
+  { sentence: "__ χαρά είναι μεγάλη.", translation: "Радость большая.", correct: "η", caseType: "nominative", hint: "χαρά ж.р. -ά → им. → η." },
+  { sentence: "__ ταξίδι ήταν ωραίο.", translation: "Путешествие было хорошим.", correct: "το", caseType: "nominative", hint: "ταξίδι ср.р. -ι → им. → το." },
+  { sentence: "__ χιόνι πέφτει.", translation: "Снег падает.", correct: "το", caseType: "nominative", hint: "χιόνι ср.р. -ι → им. → το." },
+  { sentence: "__ φαγητό είναι νόστιμο.", translation: "Еда вкусная.", correct: "το", caseType: "nominative", hint: "φαγητό ср.р. -ό → им. → το." },
+  { sentence: "__ πυρετός είναι ψηλός.", translation: "Температура высокая.", correct: "ο", caseType: "nominative", hint: "πυρετός м.р. -ός → им. → ο." },
+  { sentence: "__ ερώτηση είναι δύσκολη.", translation: "Вопрос сложный.", correct: "η", caseType: "nominative", hint: "ερώτηση ж.р. -η → им. → η." },
+  { sentence: "__ απόφαση είναι δύσκολη.", translation: "Решение сложное.", correct: "η", caseType: "nominative", hint: "απόφαση ж.р. -η → им. → η." },
+
 ];
 
 // =====================================================================
@@ -203,6 +283,9 @@ const N_O   = ["το|ο", "του|ου", "τα|α",  "των|ων"];
 const N_I   = ["το|ι", "του|ιού", "τα|ιά", "των|ιών"];
 const N_I_S = ["το|ί", "του|ιού", "τα|ιά", "των|ιών"];
 const N_MA  = ["το|μα", "του|ματος", "τα|ματα", "των|μάτων"];
+const N_O_S  = ["то|ό",  "тоу|ού",  "тα|ά",  "тών|ών"];   // ср.р. -ό stressed (φαγητό, νερό)
+const F_HD_N = ["η|ή",  "тής|ής",  "тήν|ή", "оι|ές"];     // ж.р. -ή, acc=την (εποχή, ακτή)
+const F_AD_T = ["η|ά",  "тής|άς",  "тη|ά",  "оι|ές"];     // ж.р. -ά, acc=тη (χαρά, γωνιά)
 
 const ENDING_EXERCISES = [
   // Masc -ος unstressed
@@ -328,6 +411,438 @@ const ENDING_EXERCISES = [
   { prefix: "Διαλέγω ", middle: " χρώ", suffix: ".", translation: "Выбираю цвет.", correct: "το|μα", options: N_MA, caseType: "accusative", hint: "Винительный → το + -μα." },
   { prefix: "", middle: " γράμ", suffix: " ήρθε.", translation: "Письмо пришло.", correct: "το|μα", options: N_MA, caseType: "nominative", hint: "γράμμα → το + -μα." },
   { prefix: "Στέλνω ", middle: " γράμ", suffix: ".", translation: "Отправляю письмо.", correct: "το|μα", options: N_MA, caseType: "accusative", hint: "Винительный → το + -μα." },
+
+  // ================================================================
+  // М.р. -ος UNSTRESSED (M_OS)
+  // θείος, τρόπος, τόπος, νόμος, τοίχος, ήχος, φόβος, χρόνος, κίνδυνος, συνάδελφος, πόνος
+  // ================================================================
+
+  // θείος — дядя
+  { prefix: "", middle: " θεί", suffix: " μου ήρθε.", translation: "Мой дядя пришёл.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "θείος (м.р., -ος). Им. → ο + -ος." },
+  { prefix: "Το δώρο ", middle: " θεί", suffix: " μου.", translation: "Подарок дяди.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Род. м.р. -ος → του + -ου." },
+  { prefix: "Βλέπω ", middle: " θεί", suffix: " μου.", translation: "Вижу дядю.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Вин. м.р. -ος → τον + -ο." },
+
+  // τρόπος — способ, манера
+  { prefix: "", middle: " τρόπ", suffix: " είναι λάθος.", translation: "Способ неправильный.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "τρόπος → ο + -ος." },
+  { prefix: "Δεν μου αρέσει ", middle: " τρόπ", suffix: " σου.", translation: "Мне не нравится твоя манера.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "Им. → ο + -ος. (Артикль нужен, т.к. притяжательное «σου» требует определённость.)" },
+  { prefix: "Ψάχνω ", middle: " τρόπ", suffix: " να το λύσω.", translation: "Ищу способ решить это.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Вин. → τον + -ο." },
+
+  // τόπος — место
+  { prefix: "", middle: " τόπ", suffix: " είναι όμορφος.", translation: "Место красивое.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "τόπος → ο + -ος." },
+  { prefix: "Η ομορφιά ", middle: " τόπ", suffix: ".", translation: "Красота места.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Род. → του + -ου." },
+  { prefix: "Αγαπώ ", middle: " τόπ", suffix: " αυτό.", translation: "Люблю это место.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Вин. → τον + -ο." },
+
+  // νόμος — закон
+  { prefix: "", middle: " νόμ", suffix: " ισχύει παντού.", translation: "Закон действует везде.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "νόμος → ο + -ος." },
+  { prefix: "Η παραβίαση ", middle: " νόμ", suffix: ".", translation: "Нарушение закона.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Род. → του + -ου." },
+
+  // τοίχος — стена
+  { prefix: "", middle: " τοίχ", suffix: " είναι παλιός.", translation: "Стена старая.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "τοίχος → ο + -ος." },
+  { prefix: "Το χρώμα ", middle: " τοίχ", suffix: ".", translation: "Цвет стены.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Род. → του + -ου." },
+  { prefix: "Βάφω ", middle: " τοίχ", suffix: ".", translation: "Крашу стену.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Вин. → τον + -ο." },
+
+  // ήχος — звук
+  { prefix: "", middle: " ήχ", suffix: " ήταν δυνατός.", translation: "Звук был громкий.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "ήχος → ο + -ος." },
+  { prefix: "Η ένταση ", middle: " ήχ", suffix: ".", translation: "Громкость звука.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Род. → του + -ου." },
+
+  // φόβος — страх
+  { prefix: "", middle: " φόβ", suffix: " είναι φυσιολογικός.", translation: "Страх — это нормально.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "φόβος → ο + -ος." },
+  { prefix: "Η αιτία ", middle: " φόβ", suffix: ".", translation: "Причина страха.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Род. → του + -ου." },
+  { prefix: "Νιώθω ", middle: " φόβ", suffix: ".", translation: "Чувствую страх.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Вин. → τον + -ο." },
+
+  // χρόνος — год / время
+  { prefix: "", middle: " χρόν", suffix: " πέρασε γρήγορα.", translation: "Год прошёл быстро.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "χρόνος → ο + -ος." },
+  { prefix: "Η αρχή ", middle: " χρόν", suffix: ".", translation: "Начало года.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Род. → του + -ου." },
+  { prefix: "Περιμένω ", middle: " χρόν", suffix: ".", translation: "Жду год.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Вин. → τον + -ο." },
+
+  // κίνδυνος — опасность
+  { prefix: "", middle: " κίνδυν", suffix: " είναι μεγάλος.", translation: "Опасность велика.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "κίνδυνος → ο + -ος." },
+  { prefix: "Η ένταση ", middle: " κινδύν", suffix: ".", translation: "Степень опасности.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Род. → του + -ου. Ударение сдвинулось." },
+  { prefix: "Αποφεύγω ", middle: " κίνδυν", suffix: ".", translation: "Избегаю опасности.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Вин. → τον + -ο." },
+
+  // συνάδελφος — коллега
+  { prefix: "", middle: " συνάδελφ", suffix: " μου είναι ευγενικός.", translation: "Мой коллега вежливый.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "συνάδελφος → ο + -ος." },
+  { prefix: "Το γραφείο ", middle: " συναδέλφ", suffix: " μου.", translation: "Офис моего коллеги.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Род. → του + -ου. Ударение сдвинулось." },
+  { prefix: "Ρωτώ ", middle: " συνάδελφ", suffix: " μου.", translation: "Спрашиваю своего коллегу.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Вин. → τον + -ο." },
+
+  // πόνος — боль
+  { prefix: "", middle: " πόν", suffix: " είναι δυνατός.", translation: "Боль сильная.", correct: "ο|ος", options: M_OS, caseType: "nominative", hint: "πόνος → ο + -ος." },
+  { prefix: "Η αιτία ", middle: " πόν", suffix: ".", translation: "Причина боли.", correct: "του|ου", options: M_OS, caseType: "genitive", hint: "Род. → του + -ου." },
+  { prefix: "Νιώθω ", middle: " πόν", suffix: ".", translation: "Чувствую боль.", correct: "τον|ο", options: M_OS, caseType: "accusative", hint: "Вин. → τον + -ο." },
+
+  // ================================================================
+  // М.р. -ός STRESSED (M_OS_S)
+  // σταθμός, βαθμός, χυμός, πυρετός, θυμός, λογαριασμός
+  // ================================================================
+
+  // σταθμός — станция
+  { prefix: "", middle: " σταθμ", suffix: " είναι κοντά.", translation: "Станция рядом.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "σταθμός (ударение на конце). Им. → ο + -ός." },
+  { prefix: "Η έξοδος ", middle: " σταθμ", suffix: ".", translation: "Выход со станции.", correct: "του|ού", options: M_OS_S, caseType: "genitive", hint: "Род. → του + -ού." },
+  { prefix: "Περνώ από ", middle: " σταθμ", suffix: ".", translation: "Прохожу мимо станции.", correct: "τον|ό", options: M_OS_S, caseType: "accusative", hint: "Вин. → τον + -ό." },
+
+  // βαθμός — оценка / степень
+  { prefix: "", middle: " βαθμ", suffix: " μου ήταν καλός.", translation: "Моя оценка была хорошей.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "βαθμός → ο + -ός." },
+  { prefix: "Η σημασία ", middle: " βαθμ", suffix: ".", translation: "Значение оценки.", correct: "του|ού", options: M_OS_S, caseType: "genitive", hint: "Род. → του + -ού." },
+  { prefix: "Παίρνω ψηλό ", middle: " βαθμ", suffix: ".", translation: "Получаю высокую оценку.", correct: "τον|ό", options: M_OS_S, caseType: "accusative", hint: "Вин. → τον + -ό." },
+
+  // χυμός — сок
+  { prefix: "", middle: " χυμ", suffix: " είναι φρέσκος.", translation: "Сок свежий.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "χυμός → ο + -ός." },
+  { prefix: "Πίνω ", middle: " χυμ", suffix: " πορτοκάλι.", translation: "Пью апельсиновый сок.", correct: "τον|ό", options: M_OS_S, caseType: "accusative", hint: "Вин. → τον + -ό." },
+
+  // πυρετός — температура / жар
+  { prefix: "", middle: " πυρετ", suffix: " ανέβηκε.", translation: "Температура поднялась.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "πυρετός → ο + -ός." },
+  { prefix: "Η αιτία ", middle: " πυρετ", suffix: ".", translation: "Причина температуры.", correct: "του|ού", options: M_OS_S, caseType: "genitive", hint: "Род. → του + -ού." },
+
+  // θυμός — злость / гнев
+  { prefix: "", middle: " θυμ", suffix: " του είναι επικίνδυνος.", translation: "Его злость опасна.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "θυμός → ο + -ός." },
+  { prefix: "Νιώθω ", middle: " θυμ", suffix: ".", translation: "Чувствую злость.", correct: "τον|ό", options: M_OS_S, caseType: "accusative", hint: "Вин. → τον + -ό." },
+
+  // λογαριασμός — счёт / счёт в банке
+  { prefix: "", middle: " λογαριασμ", suffix: " ήρθε.", translation: "Счёт пришёл.", correct: "ο|ός", options: M_OS_S, caseType: "nominative", hint: "λογαριασμός → ο + -ός." },
+  { prefix: "Πληρώνω ", middle: " λογαριασμ", suffix: ".", translation: "Оплачиваю счёт.", correct: "τον|ό", options: M_OS_S, caseType: "accusative", hint: "Вин. → τον + -ό." },
+
+  // ================================================================
+  // М.р. -ας (M_AS)
+  // γείτονας, αγώνας, αέρας
+  // ================================================================
+
+  // γείτονας — сосед
+  { prefix: "", middle: " γείτον", suffix: " μου είναι φιλικός.", translation: "Мой сосед дружелюбный.", correct: "ο|ας", options: M_AS, caseType: "nominative", hint: "γείτονας (м.р., -ας) → ο + -ας." },
+  { prefix: "Το σπίτι ", middle: " γείτον", suffix: " μου.", translation: "Дом моего соседа.", correct: "του|α", options: M_AS, caseType: "genitive", hint: "Тип -ας, род. → του + -α (без 'ς')." },
+  { prefix: "Βοηθώ ", middle: " γείτον", suffix: " μου.", translation: "Помогаю соседу.", correct: "τον|α", options: M_AS, caseType: "accusative", hint: "Тип -ας, вин. → τον + -α." },
+
+  // αγώνας — соревнование / борьба
+  { prefix: "", middle: " αγών", suffix: " είναι δύσκολος.", translation: "Соревнование сложное.", correct: "ο|ας", options: M_AS, caseType: "nominative", hint: "αγώνας → ο + -ας." },
+  { prefix: "Το αποτέλεσμα ", middle: " αγών", suffix: ".", translation: "Результат соревнования.", correct: "του|α", options: M_AS, caseType: "genitive", hint: "Тип -ας, род. → του + -α." },
+  { prefix: "Παρακολουθώ ", middle: " αγών", suffix: ".", translation: "Наблюдаю за соревнованием.", correct: "τον|α", options: M_AS, caseType: "accusative", hint: "Тип -ας, вин. → τον + -α." },
+
+  // αέρας — ветер / воздух
+  { prefix: "", middle: " αέρ", suffix: " είναι δυνατός.", translation: "Ветер сильный.", correct: "ο|ας", options: M_AS, caseType: "nominative", hint: "αέρας → ο + -ας." },
+  { prefix: "Η κατεύθυνση ", middle: " αέρ", suffix: ".", translation: "Направление ветра.", correct: "του|α", options: M_AS, caseType: "genitive", hint: "Тип -ας, род. → του + -α." },
+  { prefix: "Νιώθω ", middle: " αέρ", suffix: ".", translation: "Чувствую ветер.", correct: "τον|α", options: M_AS, caseType: "accusative", hint: "Тип -ας, вин. → τον + -α." },
+
+  // ================================================================
+  // М.р. -ής stressed (M_HS)
+  // υπολογιστής, πωλητής, πολίτης, τεχνίτης
+  // ================================================================
+
+  // υπολογιστής — компьютер
+  { prefix: "", middle: " υπολογιστ", suffix: " χάλασε.", translation: "Компьютер сломался.", correct: "ο|ής", options: M_HS, caseType: "nominative", hint: "υπολογιστής (м.р., -ής) → ο + -ής." },
+  { prefix: "Το πρόγραμμα ", middle: " υπολογιστ", suffix: ".", translation: "Программа компьютера.", correct: "του|ή", options: M_HS, caseType: "genitive", hint: "Тип -ής, род. → του + -ή." },
+  { prefix: "Χρησιμοποιώ ", middle: " υπολογιστ", suffix: ".", translation: "Использую компьютер.", correct: "τον|ή", options: M_HS, caseType: "accusative", hint: "Тип -ής, вин. → τον + -ή." },
+
+  // πωλητής — продавец
+  { prefix: "", middle: " πωλητ", suffix: " ήταν ευγενικός.", translation: "Продавец был вежливым.", correct: "ο|ής", options: M_HS, caseType: "nominative", hint: "πωλητής → ο + -ής." },
+  { prefix: "Η συμβουλή ", middle: " πωλητ", suffix: ".", translation: "Совет продавца.", correct: "του|ή", options: M_HS, caseType: "genitive", hint: "Тип -ής, род. → του + -ή." },
+  { prefix: "Ρωτώ ", middle: " πωλητ", suffix: ".", translation: "Спрашиваю продавца.", correct: "τον|ή", options: M_HS, caseType: "accusative", hint: "Тип -ής, вин. → τον + -ή." },
+
+  // πολίτης — гражданин
+  { prefix: "", middle: " πολίτ", suffix: " έχει δικαιώματα.", translation: "Гражданин имеет права.", correct: "ο|ής", options: M_HS, caseType: "nominative", hint: "πολίτης → ο + -ής." },
+  { prefix: "Τα δικαιώματα ", middle: " πολίτ", suffix: ".", translation: "Права гражданина.", correct: "του|ή", options: M_HS, caseType: "genitive", hint: "Тип -ής, род. → του + -ή." },
+
+  // τεχνίτης — мастер / техник
+  { prefix: "", middle: " τεχνίτ", suffix: " ήρθε.", translation: "Мастер пришёл.", correct: "ο|ής", options: M_HS, caseType: "nominative", hint: "τεχνίτης → ο + -ής." },
+  { prefix: "Καλώ ", middle: " τεχνίτ", suffix: ".", translation: "Вызываю мастера.", correct: "τον|ή", options: M_HS, caseType: "accusative", hint: "Тип -ής, вин. → τον + -ή." },
+
+  // ================================================================
+  // Ж.р. -η, acc=τη (F_H_T)
+  // βιβλιοθήκη, μάθηση, σχέση, συγχώρεση, λύση
+  // ================================================================
+
+  // βιβλιοθήκη — библиотека
+  { prefix: "", middle: " βιβλιοθήκ", suffix: " είναι μεγάλη.", translation: "Библиотека большая.", correct: "η|η", options: F_H_T, caseType: "nominative", hint: "βιβλιοθήκη (ж.р., -η) → η + -η." },
+  { prefix: "Το ωράριο ", middle: " βιβλιοθήκ", suffix: ".", translation: "Расписание библиотеки.", correct: "της|ης", options: F_H_T, caseType: "genitive", hint: "Тип -η, род. → της + -ης." },
+  { prefix: "Επισκέπτομαι ", middle: " βιβλιοθήκ", suffix: ".", translation: "Посещаю библиотеку.", correct: "τη|η", options: F_H_T, caseType: "accusative", hint: "Перед β — τη. Вин. -η → τη + -η." },
+
+  // μάθηση — обучение
+  { prefix: "", middle: " μάθησ", suffix: " είναι σημαντική.", translation: "Обучение важно.", correct: "η|η", options: F_H_T, caseType: "nominative", hint: "μάθηση → η + -η." },
+  { prefix: "Η διαδικασία ", middle: " μάθησ", suffix: ".", translation: "Процесс обучения.", correct: "της|ης", options: F_H_T, caseType: "genitive", hint: "Тип -η, род. → της + -ης." },
+  { prefix: "Αγαπώ ", middle: " μάθησ", suffix: ".", translation: "Люблю учёбу.", correct: "τη|η", options: F_H_T, caseType: "accusative", hint: "Перед μ — τη." },
+
+  // σχέση — отношения
+  { prefix: "", middle: " σχέσ", suffix: " ήταν δύσκολη.", translation: "Отношения были сложными.", correct: "η|η", options: F_H_T, caseType: "nominative", hint: "σχέση → η + -η." },
+  { prefix: "Η αρχή ", middle: " σχέσ", suffix: ".", translation: "Начало отношений.", correct: "της|ης", options: F_H_T, caseType: "genitive", hint: "Тип -η, род. → της + -ης." },
+  { prefix: "Χαλάω ", middle: " σχέσ", suffix: ".", translation: "Порчу отношения.", correct: "τη|η", options: F_H_T, caseType: "accusative", hint: "Перед σ — τη." },
+
+  // λύση — решение / выход
+  { prefix: "", middle: " λύσ", suffix: " είναι απλή.", translation: "Решение простое.", correct: "η|η", options: F_H_T, caseType: "nominative", hint: "λύση → η + -η." },
+  { prefix: "Ψάχνω ", middle: " λύσ", suffix: ".", translation: "Ищу решение.", correct: "τη|η", options: F_H_T, caseType: "accusative", hint: "Перед λ — τη." },
+
+  // ================================================================
+  // Ж.р. -η, acc=την (F_H_N)
+  // άσκηση, απάντηση, ερώτηση, εξέταση, απόφαση, ανάγκη
+  // ================================================================
+
+  // άσκηση — упражнение
+  { prefix: "", middle: " άσκησ", suffix: " είναι δύσκολη.", translation: "Упражнение сложное.", correct: "η|η", options: F_H_N, caseType: "nominative", hint: "άσκηση → η + -η." },
+  { prefix: "Ο σκοπός ", middle: " άσκησ", suffix: ".", translation: "Цель упражнения.", correct: "της|ης", options: F_H_N, caseType: "genitive", hint: "Тип -η, род. → της + -ης." },
+  { prefix: "Κάνω ", middle: " άσκησ", suffix: ".", translation: "Делаю упражнение.", correct: "την|η", options: F_H_N, caseType: "accusative", hint: "Перед α (гласная) — την." },
+
+  // απάντηση — ответ
+  { prefix: "", middle: " απάντησ", suffix: " ήταν σωστή.", translation: "Ответ был правильным.", correct: "η|η", options: F_H_N, caseType: "nominative", hint: "απάντηση → η + -η." },
+  { prefix: "Η αναμονή ", middle: " απάντησ", suffix: ".", translation: "Ожидание ответа.", correct: "της|ης", options: F_H_N, caseType: "genitive", hint: "Тип -η, род. → της + -ης." },
+  { prefix: "Δίνω ", middle: " απάντησ", suffix: ".", translation: "Даю ответ.", correct: "την|η", options: F_H_N, caseType: "accusative", hint: "Перед α (гласная) — την." },
+
+  // ερώτηση — вопрос
+  { prefix: "", middle: " ερώτησ", suffix: " ήταν δύσκολη.", translation: "Вопрос был сложным.", correct: "η|η", options: F_H_N, caseType: "nominative", hint: "ερώτηση → η + -η." },
+  { prefix: "Η απάντηση ", middle: " ερώτησ", suffix: ".", translation: "Ответ на вопрос.", correct: "της|ης", options: F_H_N, caseType: "genitive", hint: "Тип -η, род. → της + -ης." },
+  { prefix: "Κάνω ", middle: " ερώτησ", suffix: ".", translation: "Задаю вопрос.", correct: "την|η", options: F_H_N, caseType: "accusative", hint: "Перед ε (гласная) — την." },
+
+  // εξέταση — экзамен
+  { prefix: "", middle: " εξέτασ", suffix: " είναι αύριο.", translation: "Экзамен завтра.", correct: "η|η", options: F_H_N, caseType: "nominative", hint: "εξέταση → η + -η." },
+  { prefix: "Η ημερομηνία ", middle: " εξέτασ", suffix: ".", translation: "Дата экзамена.", correct: "της|ης", options: F_H_N, caseType: "genitive", hint: "Тип -η, род. → της + -ης." },
+  { prefix: "Περνώ ", middle: " εξέτασ", suffix: ".", translation: "Сдаю экзамен (прохожу).", correct: "την|η", options: F_H_N, caseType: "accusative", hint: "Перед ε (гласная) — την." },
+
+  // απόφαση — решение
+  { prefix: "", middle: " απόφασ", suffix: " ήταν σωστή.", translation: "Решение было правильным.", correct: "η|η", options: F_H_N, caseType: "nominative", hint: "απόφαση → η + -η." },
+  { prefix: "Παίρνω ", middle: " απόφασ", suffix: ".", translation: "Принимаю решение.", correct: "την|η", options: F_H_N, caseType: "accusative", hint: "Перед α (гласная) — την." },
+
+  // ανάγκη — необходимость / нужда
+  { prefix: "", middle: " ανάγκ", suffix: " είναι μεγάλη.", translation: "Нужда велика.", correct: "η|η", options: F_H_N, caseType: "nominative", hint: "ανάγκη → η + -η." },
+  { prefix: "Η αίσθηση ", middle: " ανάγκ", suffix: ".", translation: "Ощущение необходимости.", correct: "της|ης", options: F_H_N, caseType: "genitive", hint: "Тип -η, род. → της + -ης." },
+  { prefix: "Νιώθω ", middle: " ανάγκ", suffix: ".", translation: "Чувствую необходимость.", correct: "την|η", options: F_H_N, caseType: "accusative", hint: "Перед α (гласная) — την." },
+
+  // ================================================================
+  // Ж.р. -ή stressed, acc=τη (F_HD)
+  // βροχή, διαδρομή, στιγμή
+  // ================================================================
+
+  // βροχή — дождь
+  { prefix: "", middle: " βροχ", suffix: " είναι δυνατή.", translation: "Дождь сильный.", correct: "η|ή", options: F_HD, caseType: "nominative", hint: "βροχή (ж.р., ударная -ή) → η + -ή." },
+  { prefix: "Η δύναμη ", middle: " βροχ", suffix: ".", translation: "Сила дождя.", correct: "της|ής", options: F_HD, caseType: "genitive", hint: "Ударная -ή, род. → της + -ής." },
+  { prefix: "Νιώθω ", middle: " βροχ", suffix: ".", translation: "Чувствую дождь.", correct: "τη|ή", options: F_HD, caseType: "accusative", hint: "Перед β — τη + -ή." },
+
+  // διαδρομή — маршрут / дорога
+  { prefix: "", middle: " διαδρομ", suffix: " είναι μεγάλη.", translation: "Маршрут длинный.", correct: "η|ή", options: F_HD, caseType: "nominative", hint: "διαδρομή → η + -ή." },
+  { prefix: "Η αρχή ", middle: " διαδρομ", suffix: ".", translation: "Начало маршрута.", correct: "της|ής", options: F_HD, caseType: "genitive", hint: "Тип -ή, род. → της + -ής." },
+  { prefix: "Ακολουθώ ", middle: " διαδρομ", suffix: ".", translation: "Следую маршруту.", correct: "τη|ή", options: F_HD, caseType: "accusative", hint: "Перед δ — τη + -ή." },
+
+  // στιγμή — момент
+  { prefix: "", middle: " στιγμ", suffix: " είναι ιδανική.", translation: "Момент идеальный.", correct: "η|ή", options: F_HD, caseType: "nominative", hint: "στιγμή → η + -ή." },
+  { prefix: "Δεν ξεχνώ ", middle: " στιγμ", suffix: " αυτή.", translation: "Не забываю этот момент.", correct: "τη|ή", options: F_HD, caseType: "accusative", hint: "Перед σ — τη + -ή." },
+
+  // ================================================================
+  // Ж.р. -ή stressed, acc=την (F_HD_N — starts with vowel)
+  // εποχή, ακτή, υπομονή
+  // ================================================================
+
+  // εποχή — сезон
+  { prefix: "", middle: " εποχ", suffix: " αλλάζει.", translation: "Сезон меняется.", correct: "η|ή", options: F_HD_N, caseType: "nominative", hint: "εποχή → η + -ή." },
+  { prefix: "Η αρχή ", middle: " εποχ", suffix: ".", translation: "Начало сезона.", correct: "της|ής", options: F_HD_N, caseType: "genitive", hint: "Тип -ή, род. → της + -ής." },
+  { prefix: "Αγαπώ ", middle: " εποχ", suffix: " αυτή.", translation: "Люблю этот сезон.", correct: "την|ή", options: F_HD_N, caseType: "accusative", hint: "Перед ε (гласная) — την + -ή." },
+
+  // υπομονή — терпение
+  { prefix: "", middle: " υπομον", suffix: " είναι αρετή.", translation: "Терпение — это добродетель.", correct: "η|ή", options: F_HD_N, caseType: "nominative", hint: "υπομονή → η + -ή." },
+  { prefix: "Χάνω ", middle: " υπομον", suffix: " μου.", translation: "Теряю терпение.", correct: "την|ή", options: F_HD_N, caseType: "accusative", hint: "Перед υ (гласная) — την + -ή." },
+
+  // ================================================================
+  // Ж.р. -α, acc=τη (F_A_T)
+  // σούπα, σαλάτα, νοσοκόμα, συμφωνία, διαφωνία, συνήθεια, βοήθεια
+  // ================================================================
+
+  // σούπα — суп
+  { prefix: "", middle: " σούπ", suffix: " είναι ζεστή.", translation: "Суп горячий.", correct: "η|α", options: F_A_T, caseType: "nominative", hint: "σούπα (ж.р., -α) → η + -α." },
+  { prefix: "Η γεύση ", middle: " σούπ", suffix: ".", translation: "Вкус супа.", correct: "της|ας", options: F_A_T, caseType: "genitive", hint: "Тип -α, род. → της + -ας." },
+  { prefix: "Θέλω ", middle: " σούπ", suffix: ".", translation: "Хочу суп.", correct: "τη|α", options: F_A_T, caseType: "accusative", hint: "Перед σ — τη + -α." },
+
+  // σαλάτα — салат
+  { prefix: "", middle: " σαλάτ", suffix: " είναι φρέσκια.", translation: "Салат свежий.", correct: "η|α", options: F_A_T, caseType: "nominative", hint: "σαλάτα → η + -α." },
+  { prefix: "Παραγγέλνω ", middle: " σαλάτ", suffix: ".", translation: "Заказываю салат.", correct: "τη|α", options: F_A_T, caseType: "accusative", hint: "Перед σ — τη + -α." },
+
+  // νοσοκόμα — медсестра
+  { prefix: "", middle: " νοσοκόμ", suffix: " ήταν ευγενική.", translation: "Медсестра была добброй.", correct: "η|α", options: F_A_T, caseType: "nominative", hint: "νοσοκόμα → η + -α." },
+  { prefix: "Καλώ ", middle: " νοσοκόμ", suffix: ".", translation: "Зову медсестру.", correct: "τη|α", options: F_A_T, caseType: "accusative", hint: "Перед ν — τη + -α." },
+
+  // συμφωνία — соглашение
+  { prefix: "", middle: " συμφωνί", suffix: " υπογράφηκε.", translation: "Соглашение подписано.", correct: "η|α", options: F_A_T, caseType: "nominative", hint: "συμφωνία → η + -α." },
+  { prefix: "Οι όροι ", middle: " συμφωνί", suffix: ".", translation: "Условия соглашения.", correct: "της|ας", options: F_A_T, caseType: "genitive", hint: "Тип -α, род. → της + -ας." },
+  { prefix: "Υπογράφω ", middle: " συμφωνί", suffix: ".", translation: "Подписываю соглашение.", correct: "τη|α", options: F_A_T, caseType: "accusative", hint: "Перед σ — τη + -α." },
+
+  // συνήθεια — привычка
+  { prefix: "", middle: " συνήθει", suffix: " είναι κακή.", translation: "Привычка плохая.", correct: "η|α", options: F_A_T, caseType: "nominative", hint: "συνήθεια → η + -α." },
+  { prefix: "Αλλάζω ", middle: " συνήθει", suffix: ".", translation: "Меняю привычку.", correct: "τη|α", options: F_A_T, caseType: "accusative", hint: "Перед σ — τη + -α." },
+
+  // βοήθεια — помощь
+  { prefix: "", middle: " βοήθει", suffix: " ήταν σημαντική.", translation: "Помощь была важной.", correct: "η|α", options: F_A_T, caseType: "nominative", hint: "βοήθεια → η + -α." },
+  { prefix: "Ζητώ ", middle: " βοήθει", suffix: ".", translation: "Прошу помощи.", correct: "τη|α", options: F_A_T, caseType: "accusative", hint: "Перед β — τη + -α." },
+
+  // ================================================================
+  // Ж.р. -α, acc=την (F_A_N — starts with vowel or voiceless plosive)
+  // εργασία, επιτυχία, αποτυχία, ελπίδα, ευτυχία, πλατεία, παραλία, εκκλησία, αίθουσα, καταιγίδα
+  // ================================================================
+
+  // εργασία — работа / задание
+  { prefix: "", middle: " εργασί", suffix: " είναι δύσκολη.", translation: "Работа сложная.", correct: "η|α", options: F_A_N, caseType: "nominative", hint: "εργασία → η + -α." },
+  { prefix: "Η ποιότητα ", middle: " εργασί", suffix: ".", translation: "Качество работы.", correct: "της|ας", options: F_A_N, caseType: "genitive", hint: "Тип -α, род. → της + -ας." },
+  { prefix: "Τελειώνω ", middle: " εργασί", suffix: ".", translation: "Заканчиваю работу.", correct: "την|α", options: F_A_N, caseType: "accusative", hint: "Перед ε (гласная) — την + -α." },
+
+  // επιτυχία — успех
+  { prefix: "", middle: " επιτυχί", suffix: " ήταν μεγάλη.", translation: "Успех был большим.", correct: "η|α", options: F_A_N, caseType: "nominative", hint: "επιτυχία → η + -α." },
+  { prefix: "Το μυστικό ", middle: " επιτυχί", suffix: ".", translation: "Секрет успеха.", correct: "της|ας", options: F_A_N, caseType: "genitive", hint: "Тип -α, род. → της + -ας." },
+  { prefix: "Γιορτάζω ", middle: " επιτυχί", suffix: ".", translation: "Отмечаю успех.", correct: "την|α", options: F_A_N, caseType: "accusative", hint: "Перед ε (гласная) — την." },
+
+  // αποτυχία — неудача
+  { prefix: "", middle: " αποτυχί", suffix: " είναι δύσκολη.", translation: "Неудача тяжела.", correct: "η|α", options: F_A_N, caseType: "nominative", hint: "αποτυχία → η + -α." },
+  { prefix: "Η αιτία ", middle: " αποτυχί", suffix: ".", translation: "Причина неудачи.", correct: "της|ας", options: F_A_N, caseType: "genitive", hint: "Тип -α, род. → της + -ας." },
+  { prefix: "Φοβάμαι ", middle: " αποτυχί", suffix: ".", translation: "Боюсь неудачи.", correct: "την|α", options: F_A_N, caseType: "accusative", hint: "Перед α (гласная) — την." },
+
+  // ελπίδα — надежда
+  { prefix: "", middle: " ελπίδ", suffix: " δεν χάνεται.", translation: "Надежда не теряется.", correct: "η|α", options: F_A_N, caseType: "nominative", hint: "ελπίδα → η + -α." },
+  { prefix: "Η δύναμη ", middle: " ελπίδ", suffix: ".", translation: "Сила надежды.", correct: "της|ας", options: F_A_N, caseType: "genitive", hint: "Тип -α, род. → της + -ας." },
+  { prefix: "Έχω ", middle: " ελπίδ", suffix: ".", translation: "Имею надежду.", correct: "την|α", options: F_A_N, caseType: "accusative", hint: "Перед ε (гласная) — την." },
+
+  // πλατεία — площадь
+  { prefix: "", middle: " πλατεί", suffix: " είναι γεμάτη κόσμο.", translation: "Площадь полна людей.", correct: "η|α", options: F_A_N, caseType: "nominative", hint: "πλατεία → η + -α." },
+  { prefix: "Στο κέντρο ", middle: " πλατεί", suffix: ".", translation: "В центре площади.", correct: "της|ας", options: F_A_N, caseType: "genitive", hint: "Тип -α, род. → της + -ας." },
+  { prefix: "Διασχίζω ", middle: " πλατεί", suffix: ".", translation: "Пересекаю площадь.", correct: "την|α", options: F_A_N, caseType: "accusative", hint: "Перед π (voiceless) — την." },
+
+  // παραλία — пляж
+  { prefix: "", middle: " παραλί", suffix: " είναι πολυσύχναστη.", translation: "Пляж многолюдный.", correct: "η|α", options: F_A_N, caseType: "nominative", hint: "παραλία → η + -α." },
+  { prefix: "Η άμμος ", middle: " παραλί", suffix: ".", translation: "Песок пляжа.", correct: "της|ας", options: F_A_N, caseType: "genitive", hint: "Тип -α, род. → της + -ας." },
+  { prefix: "Επισκέπτομαι ", middle: " παραλί", suffix: ".", translation: "Посещаю пляж.", correct: "την|α", options: F_A_N, caseType: "accusative", hint: "Перед π (voiceless) — την." },
+
+  // εκκλησία — церковь
+  { prefix: "", middle: " εκκλησί", suffix: " είναι παλιά.", translation: "Церковь старая.", correct: "η|α", options: F_A_N, caseType: "nominative", hint: "εκκλησία → η + -α." },
+  { prefix: "Πηγαίνω σ' ", middle: " εκκλησί", suffix: ".", translation: "Иду в церковь.", correct: "την|α", options: F_A_N, caseType: "accusative", hint: "Перед ε (гласная) — την." },
+
+  // αίθουσα — зал / аудитория
+  { prefix: "", middle: " αίθουσ", suffix: " είναι γεμάτη.", translation: "Зал полный.", correct: "η|α", options: F_A_N, caseType: "nominative", hint: "αίθουσα → η + -α." },
+  { prefix: "Η χωρητικότητα ", middle: " αίθουσ", suffix: ".", translation: "Вместимость зала.", correct: "της|ας", options: F_A_N, caseType: "genitive", hint: "Тип -α, род. → της + -ας." },
+  { prefix: "Μπαίνω σ' ", middle: " αίθουσ", suffix: ".", translation: "Вхожу в зал.", correct: "την|α", options: F_A_N, caseType: "accusative", hint: "Перед α (гласная) — την." },
+
+  // καταιγίδα — гроза / буря
+  { prefix: "", middle: " καταιγίδ", suffix: " πλησιάζει.", translation: "Гроза приближается.", correct: "η|α", options: F_A_N, caseType: "nominative", hint: "καταιγίδα → η + -α." },
+  { prefix: "Η δύναμη ", middle: " καταιγίδ", suffix: ".", translation: "Сила бури.", correct: "της|ας", options: F_A_N, caseType: "genitive", hint: "Тип -α, род. → της + -ας." },
+
+  // ================================================================
+  // Ж.р. -ά stressed, acc=τη (F_AD_T)
+  // χαρά, γωνιά
+  // ================================================================
+
+  // χαρά — радость
+  { prefix: "", middle: " χαρ", suffix: " είναι μεγάλη.", translation: "Радость велика.", correct: "η|ά", options: F_AD_T, caseType: "nominative", hint: "χαρά (ж.р., ударная -ά) → η + -ά." },
+  { prefix: "Η έκφραση ", middle: " χαρ", suffix: ".", translation: "Выражение радости.", correct: "της|άς", options: F_AD_T, caseType: "genitive", hint: "Тип -ά, род. → της + -άς." },
+  { prefix: "Νιώθω ", middle: " χαρ", suffix: ".", translation: "Чувствую радость.", correct: "τη|ά", options: F_AD_T, caseType: "accusative", hint: "Перед χ — τη + -ά." },
+
+  // ================================================================
+  // Ср.р. -ο (N_O)
+  // φαρμακείο, νοσοκομείο, μουσείο, εστιατόριο, αεροδρόμιο, σύννεφο, φρούτο, φάρμακο
+  // ================================================================
+
+  // φαρμακείο — аптека
+  { prefix: "", middle: " φαρμακεί", suffix: " είναι κλειστό.", translation: "Аптека закрыта.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "φαρμακείο (ср.р., -ο) → το + -ο." },
+  { prefix: "Η διεύθυνση ", middle: " φαρμακεί", suffix: ".", translation: "Адрес аптеки.", correct: "του|ου", options: N_O, caseType: "genitive", hint: "Тип -ο, род. → του + -ου." },
+  { prefix: "Βρίσκω ", middle: " φαρμακεί", suffix: ".", translation: "Нахожу аптеку.", correct: "το|ο", options: N_O, caseType: "accusative", hint: "Тип -ο, вин. = им. → το + -ο." },
+
+  // νοσοκομείο — больница
+  { prefix: "", middle: " νοσοκομεί", suffix: " είναι μεγάλο.", translation: "Больница большая.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "νοσοκομείο → το + -ο." },
+  { prefix: "Η είσοδος ", middle: " νοσοκομεί", suffix: ".", translation: "Вход в больницу.", correct: "του|ου", options: N_O, caseType: "genitive", hint: "Тип -ο, род. → του + -ου." },
+  { prefix: "Επισκέπτομαι ", middle: " νοσοκομεί", suffix: ".", translation: "Посещаю больницу.", correct: "το|ο", options: N_O, caseType: "accusative", hint: "Вин. → το + -ο." },
+
+  // μουσείο — музей
+  { prefix: "", middle: " μουσεί", suffix: " είναι ανοιχτό.", translation: "Музей открыт.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "μουσείο → το + -ο." },
+  { prefix: "Η συλλογή ", middle: " μουσεί", suffix: ".", translation: "Коллекция музея.", correct: "του|ου", options: N_O, caseType: "genitive", hint: "Тип -ο, род. → του + -ου." },
+  { prefix: "Επισκέπτομαι ", middle: " μουσεί", suffix: ".", translation: "Посещаю музей.", correct: "το|ο", options: N_O, caseType: "accusative", hint: "Вин. → το + -ο." },
+
+  // εστιατόριο — ресторан
+  { prefix: "", middle: " εστιατόρι", suffix: " είναι γεμάτο.", translation: "Ресторан полон.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "εστιατόριο → το + -ο." },
+  { prefix: "Το μενού ", middle: " εστιατόρι", suffix: ".", translation: "Меню ресторана.", correct: "του|ου", options: N_O, caseType: "genitive", hint: "Тип -ο, род. → του + -ου." },
+  { prefix: "Κλείνω ", middle: " εστιατόρι", suffix: ".", translation: "Бронирую ресторан.", correct: "το|ο", options: N_O, caseType: "accusative", hint: "Вин. → το + -ο." },
+
+  // αεροδρόμιο — аэропорт
+  { prefix: "", middle: " αεροδρόμι", suffix: " είναι μακριά.", translation: "Аэропорт далеко.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "αεροδρόμιο → το + -ο." },
+  { prefix: "Η αναχώρηση ", middle: " αεροδρομί", suffix: ".", translation: "Отправление аэропорта.", correct: "του|ου", options: N_O, caseType: "genitive", hint: "Тип -ο, род. → του + -ου. Ударение сдвинулось." },
+
+  // σύννεφο — туча / облако
+  { prefix: "", middle: " σύννεφ", suffix: " σκεπάζει τον ουρανό.", translation: "Туча закрывает небо.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "σύννεφο → το + -ο." },
+  { prefix: "Βλέπω ", middle: " σύννεφ", suffix: ".", translation: "Вижу облако.", correct: "το|ο", options: N_O, caseType: "accusative", hint: "Вин. → το + -ο." },
+
+  // φρούτο — фрукт
+  { prefix: "", middle: " φρούτ", suffix: " είναι γλυκό.", translation: "Фрукт сладкий.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "φρούτο → το + -ο." },
+  { prefix: "Τρώω ", middle: " φρούτ", suffix: ".", translation: "Ем фрукт.", correct: "το|ο", options: N_O, caseType: "accusative", hint: "Вин. → το + -ο." },
+
+  // φάρμακο — лекарство
+  { prefix: "", middle: " φάρμακ", suffix: " βοηθάει.", translation: "Лекарство помогает.", correct: "το|ο", options: N_O, caseType: "nominative", hint: "φάρμακο → το + -ο." },
+  { prefix: "Παίρνω ", middle: " φάρμακ", suffix: ".", translation: "Принимаю лекарство.", correct: "το|ο", options: N_O, caseType: "accusative", hint: "Вин. → το + -ο." },
+
+  // ================================================================
+  // Ср.р. -ό stressed (N_O_S)
+  // φαγητό, νερό, χωριό
+  // ================================================================
+
+  // φαγητό — еда / блюдо
+  { prefix: "", middle: " φαγητ", suffix: " είναι νόστιμο.", translation: "Еда вкусная.", correct: "το|ό", options: N_O_S, caseType: "nominative", hint: "φαγητό (ср.р., ударная -ό) → το + -ό." },
+  { prefix: "Η γεύση ", middle: " φαγητ", suffix: ".", translation: "Вкус еды.", correct: "του|ού", options: N_O_S, caseType: "genitive", hint: "Тип -ό, род. → του + -ού." },
+  { prefix: "Ετοιμάζω ", middle: " φαγητ", suffix: ".", translation: "Готовлю еду.", correct: "το|ό", options: N_O_S, caseType: "accusative", hint: "Тип -ό, вин. = им. → το + -ό." },
+
+  // νερό — вода
+  { prefix: "", middle: " νερ", suffix: " είναι κρύο.", translation: "Вода холодная.", correct: "το|ό", options: N_O_S, caseType: "nominative", hint: "νερό → το + -ό." },
+  { prefix: "Το ποτήρι ", middle: " νερ", suffix: ".", translation: "Стакан воды.", correct: "του|ού", options: N_O_S, caseType: "genitive", hint: "Тип -ό, род. → του + -ού." },
+  { prefix: "Πίνω ", middle: " νερ", suffix: ".", translation: "Пью воду.", correct: "το|ό", options: N_O_S, caseType: "accusative", hint: "Вин. → το + -ό." },
+
+  // χωριό — деревня
+  { prefix: "", middle: " χωρι", suffix: " είναι ήσυχο.", translation: "Деревня тихая.", correct: "το|ό", options: N_O_S, caseType: "nominative", hint: "χωριό → το + -ό." },
+  { prefix: "Η ατμόσφαιρα ", middle: " χωρι", suffix: ".", translation: "Атмосфера деревни.", correct: "του|ού", options: N_O_S, caseType: "genitive", hint: "Тип -ό, род. → του + -ού." },
+  { prefix: "Επισκέπτομαι ", middle: " χωρι", suffix: ".", translation: "Посещаю деревню.", correct: "το|ό", options: N_O_S, caseType: "accusative", hint: "Вин. → το + -ό." },
+
+  // ================================================================
+  // Ср.р. -ι (N_I)
+  // χιόνι, λιμάνι, φεγγάρι, ταξίδι
+  // ================================================================
+
+  // χιόνι — снег
+  { prefix: "", middle: " χιόν", suffix: " πέφτει.", translation: "Снег падает.", correct: "το|ι", options: N_I, caseType: "nominative", hint: "χιόνι (ср.р., -ι) → το + -ι." },
+  { prefix: "Το χρώμα ", middle: " χιονι", suffix: ".", translation: "Цвет снега.", correct: "του|ού", options: N_I, caseType: "genitive", hint: "Тип -ι, род. → του + -ιού." },
+  { prefix: "Αγγίζω ", middle: " χιόν", suffix: ".", translation: "Трогаю снег.", correct: "το|ι", options: N_I, caseType: "accusative", hint: "Вин. → το + -ι." },
+
+  // λιμάνι — порт / гавань
+  { prefix: "", middle: " λιμάν", suffix: " είναι γεμάτο πλοία.", translation: "Порт полон кораблей.", correct: "το|ι", options: N_I, caseType: "nominative", hint: "λιμάνι → το + -ι." },
+  { prefix: "Η βαθύτητα ", middle: " λιμανι", suffix: ".", translation: "Глубина порта.", correct: "του|ού", options: N_I, caseType: "genitive", hint: "Тип -ι, род. → του + -ιού." },
+  { prefix: "Βλέπω ", middle: " λιμάν", suffix: ".", translation: "Вижу порт.", correct: "το|ι", options: N_I, caseType: "accusative", hint: "Вин. → το + -ι." },
+
+  // φεγγάρι — луна
+  { prefix: "", middle: " φεγγάρ", suffix: " λάμπει.", translation: "Луна светит.", correct: "το|ι", options: N_I, caseType: "nominative", hint: "φεγγάρι → το + -ι." },
+  { prefix: "Η λάμψη ", middle: " φεγγαρι", suffix: ".", translation: "Сияние луны.", correct: "του|ού", options: N_I, caseType: "genitive", hint: "Тип -ι, род. → του + -ιού." },
+
+  // ταξίδι — путешествие
+  { prefix: "", middle: " ταξίδ", suffix: " ήταν ωραίο.", translation: "Путешествие было хорошим.", correct: "το|ι", options: N_I, caseType: "nominative", hint: "ταξίδι → το + -ι." },
+  { prefix: "Η αρχή ", middle: " ταξιδι", suffix: ".", translation: "Начало путешествия.", correct: "του|ού", options: N_I, caseType: "genitive", hint: "Тип -ι, род. → του + -ιού." },
+  { prefix: "Κάνω ", middle: " ταξίδ", suffix: ".", translation: "Совершаю путешествие.", correct: "το|ι", options: N_I, caseType: "accusative", hint: "Вин. → το + -ι." },
+
+  // ================================================================
+  // Ср.р. -ί stressed (N_I_S)
+  // κλειδί, νησί
+  // ================================================================
+
+  // κλειδί — ключ
+  { prefix: "", middle: " κλειδ", suffix: " χάθηκε.", translation: "Ключ потерялся.", correct: "το|ί", options: N_I_S, caseType: "nominative", hint: "κλειδί (ударная -ί) → το + -ί." },
+  { prefix: "Η τρύπα ", middle: " κλειδι", suffix: ".", translation: "Скважина ключа.", correct: "του|ού", options: N_I_S, caseType: "genitive", hint: "Тип -ί, род. → του + -ιού." },
+  { prefix: "Ψάχνω ", middle: " κλειδ", suffix: ".", translation: "Ищу ключ.", correct: "το|ί", options: N_I_S, caseType: "accusative", hint: "Вин. → το + -ί." },
+
+  // νησί — остров
+  { prefix: "", middle: " νησ", suffix: " είναι μικρό.", translation: "Остров маленький.", correct: "το|ί", options: N_I_S, caseType: "nominative", hint: "νησί → το + -ί." },
+  { prefix: "Η ακτή ", middle: " νησι", suffix: ".", translation: "Берег острова.", correct: "του|ού", options: N_I_S, caseType: "genitive", hint: "Тип -ί, род. → του + -ιού." },
+  { prefix: "Επισκέπτομαι ", middle: " νησ", suffix: ".", translation: "Посещаю остров.", correct: "το|ί", options: N_I_S, caseType: "accusative", hint: "Вин. → το + -ί." },
+
+  // ================================================================
+  // Ср.р. -μα (N_MA)
+  // πρόγραμμα, αποτέλεσμα, θέμα
+  // ================================================================
+
+  // πρόγραμμα — программа
+  { prefix: "", middle: " πρόγραμ", suffix: " άρχισε.", translation: "Программа началась.", correct: "το|μα", options: N_MA, caseType: "nominative", hint: "πρόγραμμα (тип -μα) → το + -μα." },
+  { prefix: "Η αρχή ", middle: " προγράμ", suffix: ".", translation: "Начало программы.", correct: "του|ματος", options: N_MA, caseType: "genitive", hint: "Тип -μα, род. → του + -ματος." },
+  { prefix: "Ακολουθώ ", middle: " πρόγραμ", suffix: ".", translation: "Следую программе.", correct: "το|μα", options: N_MA, caseType: "accusative", hint: "Вин. → το + -μα." },
+
+  // αποτέλεσμα — результат
+  { prefix: "", middle: " αποτέλεσ", suffix: " ήταν καλό.", translation: "Результат был хорошим.", correct: "το|μα", options: N_MA, caseType: "nominative", hint: "αποτέλεσμα → το + -μα." },
+  { prefix: "Η ανακοίνωση ", middle: " αποτελέσ", suffix: ".", translation: "Объявление результата.", correct: "του|ματος", options: N_MA, caseType: "genitive", hint: "Тип -μα, род. → του + -ματος. Ударение сдвинулось." },
+  { prefix: "Περιμένω ", middle: " αποτέλεσ", suffix: ".", translation: "Жду результата.", correct: "το|μα", options: N_MA, caseType: "accusative", hint: "Вин. → το + -μα." },
+
+  // θέμα — тема / вопрос
+  { prefix: "", middle: " θέμ", suffix: " είναι σημαντικό.", translation: "Тема важная.", correct: "το|μα", options: N_MA, caseType: "nominative", hint: "θέμα → το + -μα." },
+  { prefix: "Η συζήτηση ", middle: " θέμ", suffix: ".", translation: "Обсуждение темы.", correct: "του|ματος", options: N_MA, caseType: "genitive", hint: "Тип -μα, род. → του + -ματος." },
+  { prefix: "Αλλάζω ", middle: " θέμ", suffix: ".", translation: "Меняю тему.", correct: "το|μα", options: N_MA, caseType: "accusative", hint: "Вин. → το + -μα." },
 ];
 
 // =====================================================================
